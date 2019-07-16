@@ -55,7 +55,7 @@ class XavierSystem():
 		self.legacy = False;
 		self.fs = 2E6;
 		if(self.demo):
-			self.FX3 = FX3.Emulator(self.MPIFX3, 'flat_initial');
+			self.FX3 = XavierFX3.Emulator(self.MPIFX3, 'flat_initial');
 		else:
 			devices, kind = findDevices(version);
 			self.dev = devices[0];
@@ -67,7 +67,7 @@ class XavierSystem():
 			os.makedirs(self.directory, exist_ok=True);
 			self.dev.reset();
 			self.dev.set_configuration();
-			self.FX3 = FX3.DCS(self.MPIFX3, self.dev)
+			self.FX3 = XavierFX3.DCS(self.MPIFX3, self.dev)
 
 			self.fs = fs;
 			if(self.fs == None):
@@ -82,11 +82,11 @@ class XavierSystem():
 
 		fxPipe = self.FX3.getPipe();
 		fxBufferSize = self.FX3.getBufferSize();
-		self.handler = DataHandler.DataHandler(self.MPIHandler, fxPipe, fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, filename=self.outFile, directory=self.directory);
+		self.handler = XavierDataHandler.DataHandler(self.MPIHandler, fxPipe, fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, filename=self.outFile, directory=self.directory);
 
 		handlerBuffer = self.handler.getRealtimeQueue();
 		self.handler.enableRealtime();
-		self.processor = DataProcessor.DataProcessor(self.MPIProcessor, handlerBuffer, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, numProcessors=numProcessors);
+		self.processor = XavierDataProcessor.DataProcessor(self.MPIProcessor, handlerBuffer, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, numProcessors=numProcessors);
 
 
 		print("Device Initialized!");		
