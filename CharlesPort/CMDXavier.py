@@ -2,6 +2,9 @@ import sys
 sys.path.insert(0, 'PythonLib');
 sys.path.insert(0, 'PythonLib/System');
 sys.path.insert(0, 'PythonLib/GUI');
+
+import setuptools
+import pyximport; pyximport.install()
 import XavierSystem
 import code
 

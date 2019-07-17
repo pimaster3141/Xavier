@@ -1,10 +1,10 @@
 from sys import platform
 if platform == "linux" or platform == "linux2":
-    pass
+	pass
 elif platform == "darwin":
-    raise Exception("Unsupported OS: " + str(platform));
+	raise Exception("Unsupported OS: " + str(platform));
 elif platform == "win32":
-    raise Exception("Unsupported OS: " + str(platform));
+	raise Exception("Unsupported OS: " + str(platform));
 
 print("Compiling and Loading Libraries...")
 

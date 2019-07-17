@@ -32,10 +32,14 @@ class DataHandler(mp.Process):
 
 		self.dataBuffer = array.array(self.sampleSizeCode, [0]*int(bufferSize/sampleSize));
 
-		self.realtimeData = mp.Event();
-		self.realtimeQueue = mp.Queue(DataHandler.QUEUE_DEPTH);
+		self.realtimeDCSData = mp.Event();
+		self.realtimeDCSQueue = mp.Queue(DataHandler.QUEUE_DEPTH);
 
-		self.outFile = None;
+		self.realtimeNIRSData = mp.Event();
+		self.realtimeNIRSQueue = mp.Queue(DataHandler.QUEUE_DEPTH);
+
+		self.outFileDCS = None;
+		self.outFileDCS = None;
 		if(directory == None):
 			directory = '';
 		self.directory = directory;
@@ -45,7 +49,8 @@ class DataHandler(mp.Process):
 			if(not(directory[-1] == '/')):
 				self.directory = directory + '/'
 			os.makedirs(self.directory, exist_ok=True);
-			self.outFile = open(self.directory + filename, 'wb');
+			self.outFileDCS = open(self.directory + filename + "_DCS", 'wb');
+			self.outFileNIRS = open(self.directory + filename + "_NIRS", 'wb');
 			self.debug.clear();
 
 		self.fileUpdateQueue = mp.Queue(2);
@@ -60,25 +65,40 @@ class DataHandler(mp.Process):
 		p = psutil.Process(os.getpid());
 		p.nice(-13);
 		try: 
+			bufferDCS = array.array(self.sampleSizeCode, [0]*len(self.dataBuffer)/2);
+			bufferNIRS = array.array(self.sampleSizeCode, [0]*len(self.dataBuffer)/2);
 			while(not self.isDead.is_set()):				
 				if(self.dataPipe.poll(DataHandler._TIMEOUT)):					
-					self.dataPipe.recv_bytes_into(self.dataBuffer);					
+					self.dataPipe.recv_bytes_into(self.dataBuffer);	
+					self.dataBuffer.byteswap();				
 
 					if(not self.isPaused.is_set()):
+						bufferDCS = self.dataBuffer[0::2];
+						bufferNIRS = self.dataBuffer[1::2];
 						if(not self.debug.is_set()):						
-							self.dataBuffer.tofile(self.outFile);						
+							bufferDCS.tofile(self.outFileDCS);	
+							bufferNIRS.tofile(self.outFileNIRS);					
 
-						if(self.realtimeData.is_set()):						
+						if(self.realtimeDCSData.is_set()):						
 							try:							
-								self.realtimeQueue.put_nowait(copy.copy(self.dataBuffer));						
+								self.realtimeDCSQueue.put_nowait(copy.copy(bufferDCS));						
 							except queue.Full:														
-								self.MPI.put_nowait("Realtime Buffer Overrun");							
-								self.realtimeData.clear();		
+								self.MPI.put_nowait("RealtimeDCS Buffer Overrun");							
+								self.realtimeDCSData.clear();					
+
+						if(self.realtimeNIRSData.is_set()):						
+							try:							
+								self.realtimeNIRSQueue.put_nowait(copy.copy(bufferNIRS));						
+							except queue.Full:														
+								self.MPI.put_nowait("RealtimeNIRS Buffer Overrun");							
+								self.realtimeNIRSData.clear();		
 
 				if(self.isOutFileUpdate.is_set()):
 					filename = self.fileUpdateQueue.get(False);
-					self.outFile.close();
-					self.outFile = open(filename, 'wb');
+					self.outFileDCS.close();
+					self.outFileDCS = open(filename+"_DCS", 'wb');
+					self.outFileNIRS.close();
+					self.outFileNIRS = open(filename+"_NIRS", 'wb');
 					self.isOutFileUpdate.clear();												
 
 		except Exception as e:			
@@ -93,22 +113,34 @@ class DataHandler(mp.Process):
 
 	def shutdown(self):
 		self.isDead.set();
-		if(not self.outFile == None):
-			self.outFile.close();
+		if(not self.outFileDCS == None):
+			self.outFileDCS.close();
+		if(not self.outFileNIRS == None):
+			self.outFileNIRS.close();
 		
 		time.sleep(0.5);
 		while(True):
 			try:
-				(self.realtimeQueue.get(False));
+				(self.realtimeDCSQueue.get(False));
 			except queue.Empty:
 				time.sleep(0.5)    # Give tasks a chance to put more data in
-				if not self.realtimeQueue.empty():
+				if not self.realtimeDCSQueue.empty():
+					continue
+				else:
+					break;
+			try:
+				(self.realtimeNIRSQueue.get(False));
+			except queue.Empty:
+				time.sleep(0.5)    # Give tasks a chance to put more data in
+				if not self.realtimeNIRSQueue.empty():
 					continue
 				else:
 					break;
 
-		self.realtimeQueue.close();
-		self.realtimeQueue.cancel_join_thread();
+		self.realtimeDCSQueue.close();
+		self.realtimeDCSQueue.cancel_join_thread();
+		self.realtimeNIRSQueue.close();
+		self.realtimeNIRSQueue.cancel_join_thread();
 		try:				
 			self.MPI.put_nowait("Stopping Handler");
 			time.sleep(0.5);				
@@ -124,15 +156,24 @@ class DataHandler(mp.Process):
 			self.isDead.set();			
 			# self.join();			
 
-	def getRealtimeQueue(self):
-		return self.realtimeQueue;
+	def getRealtimeDCSQueue(self):
+		return self.realtimeDCSQueue;
 
-	def enableRealtime(self):
-		self.realtimeData.set();
+	def enableRealtimeDCS(self):
+		self.realtimeDCSData.set();
 
-	def disableRealtime(self):
-		self.realtimeData.clear();
+	def disableRealtimeDCS(self):
+		self.realtimeDCSData.clear();			
 
+	def getRealtimeNIRSQueue(self):
+		return self.realtimeNIRSQueue;
+
+	def enableRealtimeNIRS(self):
+		self.realtimeNIRSData.set();
+
+	def disableRealtimeNIRS(self):
+		self.realtimeNIRSData.clear();
+ 
 	def pause(self):
 		self.isPaused.set();
 
