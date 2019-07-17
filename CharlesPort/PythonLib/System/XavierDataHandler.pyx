@@ -20,8 +20,14 @@ class DataHandler(mp.Process):
 		# threading.Thread.__init__(self);
 
 		self.sampleSizeCode = None;
+		self.sampleMultiplier = 1;
+		print(sampleSize);
 		if(sampleSize == 2):
 			self.sampleSizeCode = 'h';
+		if(sampleSize == 4):
+			self.sampleMultiplier = 2;
+			self.sampleSizeCode = 'h';
+			sampleSize = 2;
 		else:
 			raise Exception("Sample Size Code not implemented");
 
@@ -65,8 +71,8 @@ class DataHandler(mp.Process):
 		p = psutil.Process(os.getpid());
 		p.nice(-13);
 		try: 
-			bufferDCS = array.array(self.sampleSizeCode, [0]*len(self.dataBuffer)/2);
-			bufferNIRS = array.array(self.sampleSizeCode, [0]*len(self.dataBuffer)/2);
+			bufferDCS = array.array(self.sampleSizeCode, [0]*(len(self.dataBuffer)/2));
+			bufferNIRS = array.array(self.sampleSizeCode, [0]*(len(self.dataBuffer)/2));
 			while(not self.isDead.is_set()):				
 				if(self.dataPipe.poll(DataHandler._TIMEOUT)):					
 					self.dataPipe.recv_bytes_into(self.dataBuffer);	

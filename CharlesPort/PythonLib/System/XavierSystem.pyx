@@ -27,7 +27,7 @@ class XavierSystem():
 	PRODUCT_IDs = [0x00F1,0x00F0];
 	BENCHMARK_SIZE = 524288; # should be 10s at 2.5MHz
 	BENCHMARK_ITERS = 100*4
-	BYTES_PER_SAMPLE = 2;
+	BYTES_PER_SAMPLE = 4;
 
 	
 	def __init__(self, outFile=None, directory='./output/', version=None, fs=None, averages=[[0, 3]], numProcessors=None, demo=False):
@@ -84,8 +84,10 @@ class XavierSystem():
 		fxBufferSize = self.FX3.getBufferSize();
 		self.handler = XavierDataHandler.DataHandler(self.MPIHandler, fxPipe, fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, filename=self.outFile, directory=self.directory);
 
-		handlerBuffer = self.handler.getRealtimeQueue();
-		self.handler.enableRealtime();
+		handlerBuffer = self.handler.getRealtimeDCSQueue();
+		handlerBuffer = self.handler.getRealtimeNIRSQueue();
+		self.handler.enableRealtimeDCS();
+		self.handler.enableRealtimeNIRS();
 		self.processor = XavierDataProcessor.DataProcessor(self.MPIProcessor, handlerBuffer, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, numProcessors=numProcessors);
 
 
@@ -153,6 +155,7 @@ class XavierSystem():
 
 	def readAllMPI(self):
 		s = self.MPIFX3.qsize();
+		print("FX3 Messges...");
 		for i in range(s):
 			try:
 				print(self.MPIFX3.get(False));
@@ -163,6 +166,7 @@ class XavierSystem():
 
 		# print("");
 		s = self.MPIHandler.qsize();
+		print("Handler Messages...");
 		for i in range(s):
 			try:
 				print(self.MPIHandler.get(False));
@@ -173,6 +177,7 @@ class XavierSystem():
 
 		# print("");
 		s = self.MPIProcessor.qsize();
+		print("Processor Messages...");
 		for i in range(s):
 			try:
 				print(self.MPIProcessor.get(False));
