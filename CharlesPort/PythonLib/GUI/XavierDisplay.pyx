@@ -19,11 +19,13 @@ class GraphWindow():
 		warnings.catch_warnings();
 		warnings.simplefilter("ignore");
 		self.processor = processor;
-		(self.g2Source, self.flowSource) = self.processor.getBuffers();
+		(self.g2Source, self.flowSource, self.nirsSource) = self.processor.getBuffers();
 		self.tauList = self.processor.getTauList();
 		self.samplePeriod = self.processor.getTWindow();
 		self.binRate = self.processor.getFs();
 		self.calcFlow = self.processor.isFlowEnabled();
+
+		self.calcNIRS = self.processor.isNIRSEnabled();
 		# self.calcFlow = False;
 
 		self.numSamples = int((depth/self.samplePeriod)+0.5);
@@ -86,6 +88,11 @@ class GraphWindow():
 			self.flowPlot.setMouseEnabled(x=False, y=False);
 			self.flowPlot.showGrid(x=False, y=True);
 
+		if(self.calcNIRS):
+			self.nirsPlot = self.win.addPlot(title="Intensity", labels={'left':('LSB'), 'bottom':('Time', 's')}, row=4, col=0, colspan=2);
+			self.nirsPlot.setMouseEnabled(x=False, y=False);
+			self.flowPlot.showGrid(x=False, y=True);
+
 		self.setupCurves();
 
 	def setupCurves(self):
@@ -95,6 +102,7 @@ class GraphWindow():
 		self.betaCurves = [];
 		self.countCurves = [];
 		self.flowCurves = [];
+		self.nirsCurves = [];
 
 		snrData = XavierG2Calc.calcSNR(self.g2Buffer);
 		for c in range(self.numG2Channels):
@@ -107,6 +115,10 @@ class GraphWindow():
 		if(self.calcFlow):
 			for c in range(self.numFlowChannels):
 				self.flowCurves.append(self.flowPlot.plot(x=self.xData, y=self.flowBuffer[:,c], pen=GraphWindow.PEN_COLORS[c], name='CH'+str(c)));
+
+		if(self.calcNIRS):
+			for c in range(self.numNIRSChannels):
+				self.nirsCurves.append(self.nirsPlot.plot(x=self.xData, y=self.nirsBuffer[:,c], pen=GraphWindow.PEN_COLORS[c], name='CH'+str(c)));
 
 	def setupDataBuffers(self):
 		g2QueueData = self.g2Source.get(block=True, timeout=GraphWindow.QUEUE_TIMEOUT);
@@ -126,10 +138,18 @@ class GraphWindow():
 			self.numFlowChannels = len(flowQueueData[0])
 			self.flowBuffer = np.zeros((self.numSamples, self.numFlowChannels));
 
-		self.updateDataBuffers(g2QueueData, flowQueueData);
+		nirsQueueData = None;
+		self.numNIRSChannels = None;
+		self.nirsBuffer = None;
+		if(self.calcNIRS):
+			nirsQueueData = self.nirsSource.get(block=True, timeout=GraphWindow.QUEUE_TIMEOUT);
+			self.numNIRSChannels = len(nirsQueueData[0])
+			self.nirsBuffer = np.zeros((self.numSamples, self.numNIRSChannels));
+
+		self.updateDataBuffers(g2QueueData, flowQueueData, nirsQueueData);
 
 
-	def updateDataBuffers(self, g2QueueData, flowQueueData):
+	def updateDataBuffers(self, g2QueueData, flowQueueData, nirsQueueData):
 		numShift = len(g2QueueData);
 		g2Data = np.array([item[0] for item in g2QueueData]);
 		vapData = np.array([item[1] for item in g2QueueData]);
@@ -156,6 +176,13 @@ class GraphWindow():
 			self.flowBuffer = np.roll(self.flowBuffer, -1*numShift, axis=0);
 			self.flowBuffer[-numShift:] = flowData;
 
+		if(self.calcNIRS):
+			numShift = len(nirsQueueData);
+			nirsData = nirsQueueData;
+
+			self.nirsBuffer = np.roll(self.nirsBuffer, -1*numShift, axis=0);
+			self.nirsBuffer[-numShift:] = nirsBuffer;
+
 		if(not self.legacy):
 			self.betaCheck.check(betaData);
 			self.pulseCheck.check(self.vapBuffer[:,1]);
@@ -175,6 +202,10 @@ class GraphWindow():
 			for c in range(self.numFlowChannels):
 				self.flowCurves[c].setData(x=self.xData, y=self.flowBuffer[:,c]);
 
+		if(self.calcNIRS):
+			for c in range(self.numNIRSChannels):
+				self.nirsCurves[c].setData(x=self.xData, y=self.nirsBuffer[:,c]);
+
 
 	def updateRoutine(self):
 		g2QueueData = self.g2Source.get(block=True, timeout=GraphWindow.QUEUE_TIMEOUT);
@@ -185,7 +216,12 @@ class GraphWindow():
 			flowQueueData = self.flowSource.get(block=True, timeout=GraphWindow.QUEUE_TIMEOUT);
 			flowQueueData = GraphWindow.emptyBuffer(self.flowSource, flowQueueData.tolist());
 
-		self.updateDataBuffers(g2QueueData, flowQueueData);
+		nirsQueueData = None;
+		if(self.calcNIRS):
+			nirsQueueData = self.nirsSource.get(block=True, timeout=GraphWindow.QUEUE_TIMEOUT);
+			nirsQueueData = GraphWindow.emptyBuffer(self.nirsSource, nirsQueueData.tolist());
+
+		self.updateDataBuffers(g2QueueData, flowQueueData, nirsQueueData);
 		self.redrawCurves();
 
 	def run(self):

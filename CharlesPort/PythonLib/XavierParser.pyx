@@ -1,5 +1,6 @@
 import numpy as np
 
+NUM_ADC_STAGES = 5;
 
 def parseCharles2(dataStream):
 	# dataStream = np.frombuffer(data, dtype=np.int16);
@@ -73,5 +74,12 @@ def parseCharlesLegacy(dataStream):
 
 	return(np.array((cn1,cn2,cn3,cn4), dtype=np.uint8), np.array((vap1,vap2,vap3,vap4), dtype=np.uint8));
 
-# def parseNIRS(dataStream):
+def parseNIRS(dataStream):
+	channelOffset = np.right_shift(dataStream[0], 14);
+	dataStream = np.bitwise_and(dataStream, 0x3FFF);
+
+	data = dataStream.reshape(int(len(dataStream)/4), 4).swapaxes(0,1);
+	data = np.roll(data, channelOffset+NUM_ADC_STAGES, 0);
+
+	return data;
 	

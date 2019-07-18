@@ -84,11 +84,11 @@ class XavierSystem():
 		fxBufferSize = self.FX3.getBufferSize();
 		self.handler = XavierDataHandler.DataHandler(self.MPIHandler, fxPipe, fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, filename=self.outFile, directory=self.directory);
 
-		handlerBuffer = self.handler.getRealtimeDCSQueue();
-		handlerBuffer = self.handler.getRealtimeNIRSQueue();
+		handlerBufferDCS = self.handler.getRealtimeDCSQueue();
+		handlerBufferNIRS = self.handler.getRealtimeNIRSQueue();
 		self.handler.enableRealtimeDCS();
 		self.handler.enableRealtimeNIRS();
-		self.processor = XavierDataProcessor.DataProcessorDCS(self.MPIProcessor, handlerBuffer, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, numProcessors=numProcessors);
+		self.processor = XavierDataProcessor.DataProcessorDCS(self.MPIProcessor, handlerBufferDCS, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, inputBufferNIRS=handlerBufferNIRS, numProcessors=numProcessors);
 
 
 		print("Device Initialized!");		
