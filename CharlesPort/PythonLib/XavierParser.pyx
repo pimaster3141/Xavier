@@ -73,5 +73,5 @@ def parseCharlesLegacy(dataStream):
 
 	return(np.array((cn1,cn2,cn3,cn4), dtype=np.uint8), np.array((vap1,vap2,vap3,vap4), dtype=np.uint8));
 
-def parseNIRS(dataStream):
+# def parseNIRS(dataStream):
 	

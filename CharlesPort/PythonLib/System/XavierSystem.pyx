@@ -24,7 +24,7 @@ print("Done")
 
 class XavierSystem():
 	VENDOR_ID = 0x04B4;
-	PRODUCT_IDs = [0x00F1,0x00F0];
+	PRODUCT_IDs = [0x00F2];
 	BENCHMARK_SIZE = 524288; # should be 10s at 2.5MHz
 	BENCHMARK_ITERS = 100*4
 	BYTES_PER_SAMPLE = 4;
@@ -88,7 +88,7 @@ class XavierSystem():
 		handlerBuffer = self.handler.getRealtimeNIRSQueue();
 		self.handler.enableRealtimeDCS();
 		self.handler.enableRealtimeNIRS();
-		self.processor = XavierDataProcessor.DataProcessor(self.MPIProcessor, handlerBuffer, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, numProcessors=numProcessors);
+		self.processor = XavierDataProcessor.DataProcessorDCS(self.MPIProcessor, handlerBuffer, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, numProcessors=numProcessors);
 
 
 		print("Device Initialized!");		
@@ -193,8 +193,8 @@ def findDevices(version):
 		devicesGen = usb.core.find(idVendor=XavierSystem.VENDOR_ID, find_all=True);
 	elif(version == 1):
 		devicesGen = usb.core.find(idVendor=XavierSystem.VENDOR_ID, idProduct=XavierSystem.PRODUCT_IDs[0], find_all=True);
-	elif(version == 2):
-		devicesGen = usb.core.find(idVendor=XavierSystem.VENDOR_ID, idProduct=XavierSystem.PRODUCT_IDs[1], find_all=True);
+	# elif(version == 2):
+	# 	devicesGen = usb.core.find(idVendor=XavierSystem.VENDOR_ID, idProduct=XavierSystem.PRODUCT_IDs[1], find_all=True);
 	else:
 		raise Exception("UNSUPPORTED VERSON" + str(version));
 
