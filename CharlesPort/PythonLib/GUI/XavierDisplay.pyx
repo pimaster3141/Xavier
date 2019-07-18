@@ -181,7 +181,7 @@ class GraphWindow():
 			nirsData = nirsQueueData;
 
 			self.nirsBuffer = np.roll(self.nirsBuffer, -1*numShift, axis=0);
-			self.nirsBuffer[-numShift:] = nirsBuffer;
+			self.nirsBuffer[-numShift:] = nirsData;
 
 		if(not self.legacy):
 			self.betaCheck.check(betaData);
