@@ -88,7 +88,7 @@ class XavierSystem():
 		handlerBufferNIRS = self.handler.getRealtimeNIRSQueue();
 		self.handler.enableRealtimeDCS();
 		self.handler.enableRealtimeNIRS();
-		self.processor = XavierDataProcessor.DataProcessorDCS(self.MPIProcessor, handlerBufferDCS, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, inputBufferNIRS=handlerBufferNIRS, numProcessors=numProcessors);
+		self.processor = XavierDataProcessor.DataProcessor(self.MPIProcessor, handlerBufferDCS, averages, legacy=self.legacy, fs=self.fs, bufferSize=fxBufferSize, sampleSize=XavierSystem.BYTES_PER_SAMPLE, calcFlow=True, calcNIRS=True, inputBufferNIRS=handlerBufferNIRS, numProcessors=numProcessors);
 
 
 		print("Device Initialized!");		
