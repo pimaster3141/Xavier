@@ -75,11 +75,28 @@ def parseCharlesLegacy(dataStream):
 	return(np.array((cn1,cn2,cn3,cn4), dtype=np.uint8), np.array((vap1,vap2,vap3,vap4), dtype=np.uint8));
 
 def parseNIRS(dataStream):
-	channelOffset = np.right_shift(dataStream[0], 14);
+	dataStream = np.array(dataStream, dtype=np.uint16);
+	# channelOffset = np.right_shift(dataStream[0], 14);
+	# # print(channelOffset);
+	# dataStream = np.bitwise_and(dataStream, 0x3FFF);
+
+	# data = dataStream.reshape(int(len(dataStream)/4), 4).swapaxes(0,1);
+	# data = np.roll(data, channelOffset+NUM_ADC_STAGES, 0);
+	# print(data);
+
+	channelOffsets = np.right_shift(dataStream, 14);
 	dataStream = np.bitwise_and(dataStream, 0x3FFF);
 
-	data = dataStream.reshape(int(len(dataStream)/4), 4).swapaxes(0,1);
-	data = np.roll(data, channelOffset+NUM_ADC_STAGES, 0);
+	cn1 = dataStream[(channelOffsets == 0)];
+	cn2 = dataStream[(channelOffsets == 1)];
+	cn3 = dataStream[(channelOffsets == 2)];
+	cn4 = dataStream[(channelOffsets == 3)];
 
+	cutoff = min(len(cn1), len(cn2), len(cn3), len(cn4));
+
+	data = np.array((cn1[0:cutoff], cn2[0:cutoff], cn3[0:cutoff], cn4[0:cutoff]), dtype=np.int16);
+	data = np.roll(data, NUM_ADC_STAGES, 0);
+
+	# print(data);
 	return data;
 	

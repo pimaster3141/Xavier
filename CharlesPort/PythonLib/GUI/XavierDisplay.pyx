@@ -15,7 +15,7 @@ class GraphWindow():
 	PEN_COLORS = ['w', 'y', 'g', 'b'];
 	QUEUE_TIMEOUT = 5;	
 
-	def __init__(self, processor, depth=10, legacy=False, refreshRate=20, stopFcn=None, checkers=True):
+	def __init__(self, processor, depth=10, legacy=False, refreshRate=20, stopFcn=None, checkers=False):
 		warnings.catch_warnings();
 		warnings.simplefilter("ignore");
 		self.processor = processor;
@@ -183,9 +183,9 @@ class GraphWindow():
 			self.nirsBuffer = np.roll(self.nirsBuffer, -1*numShift, axis=0);
 			self.nirsBuffer[-numShift:] = nirsData;
 
-		if(not self.legacy):
-			self.betaCheck.check(betaData);
-			self.pulseCheck.check(self.vapBuffer[:,1]);
+		# if(not self.legacy):
+		# 	self.betaCheck.check(betaData);
+		# 	self.pulseCheck.check(self.vapBuffer[:,1]);
 
 
 	def redrawCurves(self):
@@ -219,7 +219,7 @@ class GraphWindow():
 		nirsQueueData = None;
 		if(self.calcNIRS):
 			nirsQueueData = self.nirsSource.get(block=True, timeout=GraphWindow.QUEUE_TIMEOUT);
-			nirsQueueData = GraphWindow.emptyBuffer(self.nirsSource, nirsQueueData.tolist());
+			nirsQueueData = GraphWindow.emptyBuffer(self.nirsSource, nirsQueueData);
 
 		self.updateDataBuffers(g2QueueData, flowQueueData, nirsQueueData);
 		self.redrawCurves();

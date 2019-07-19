@@ -26,7 +26,7 @@ class XavierSystem():
 	VENDOR_ID = 0x04B4;
 	PRODUCT_IDs = [0x00F2];
 	BENCHMARK_SIZE = 524288; # should be 10s at 2.5MHz
-	BENCHMARK_ITERS = 100*4
+	BENCHMARK_ITERS = 100
 	BYTES_PER_SAMPLE = 4;
 
 	
@@ -202,7 +202,7 @@ def findDevices(version):
 	legacy = []
 	for dev in devicesGen:
 		devices.append(dev);
-		legacy.append(dev.idProduct == XavierSystem.PRODUCT_IDs[0]);
+		legacy.append(dev.idProduct != XavierSystem.PRODUCT_IDs[0]);
 
 	if(len(devices) == 0):
 		raise Exception("CANNOT FIND DEVICE");

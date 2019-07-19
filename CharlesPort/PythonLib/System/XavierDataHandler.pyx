@@ -76,7 +76,7 @@ class DataHandler(mp.Process):
 			while(not self.isDead.is_set()):				
 				if(self.dataPipe.poll(DataHandler._TIMEOUT)):					
 					self.dataPipe.recv_bytes_into(self.dataBuffer);	
-					self.dataBuffer.byteswap();				
+					# self.dataBuffer.byteswap();				
 
 					if(not self.isPaused.is_set()):
 						bufferDCS = self.dataBuffer[0::2];

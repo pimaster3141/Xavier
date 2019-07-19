@@ -2,7 +2,7 @@ import setuptools
 import pyximport; pyximport.install()
 
 import multiprocessing as mp
-# import threading
+import threading
 import numpy as np
 import os
 from functools import partial
@@ -17,22 +17,22 @@ import XavierG2Calc
 import XavierNIRSCalc
 
 
-class DataProcessor(mp.Process):
-# class DataProcessor(threading.Thread):
+# class DataProcessor(mp.Process):
+class DataProcessor(threading.Thread):
 	QUEUE_TIMEOUT = 1;
 	QUEUE_DEPTH = 100;
 	G2_LEVELS = 6;
 
-	def __init__(self, MPI, inputBufferDCS, averages, legacy, fs, bufferSize, sampleSize=2, packetMultiple=4, calcFlow=False, SNRBufferDepth=500, calcNIRS=False, inputBufferNIRS=None, numProcessors=None):
-		mp.Process.__init__(self);
-		# threading.Thread.__init__(self);
+	def __init__(self, MPI, inputBufferDCS, averages, legacy, fs, bufferSize, sampleSize=2, packetMultiple=1, calcFlow=False, SNRBufferDepth=500, calcNIRS=False, inputBufferNIRS=None, numProcessors=None):
+		# mp.Process.__init__(self);
+		threading.Thread.__init__(self);
 		self.MPI = MPI;
 		self.inputBufferDCS = inputBufferDCS;
 		self.averages = averages
 		self.legacy = legacy;
 		self.fs = fs;
-		# self.packetMultiple = packetMultiple;
-		self.packetMultiple = 8;
+		self.packetMultiple = packetMultiple;
+		# self.packetMultiple = 8;
 		self.calcFlow = calcFlow;
 
 		self.npDtype = None;
@@ -132,7 +132,7 @@ class DataProcessor(mp.Process):
 					
 					inWaiting = int(self.inputBufferNIRS.qsize()/self.packetMultiple);	
 					# print(inWaiting);			
-					# data = np.zeros((inWaiting+1, self.packetSize*self.packetMultiple), dtype=self.npDtype)
+					data = np.zeros((inWaiting+1, self.packetSize*self.packetMultiple), dtype=self.npDtype)
 					data[0] = initialData;
 
 					try:
@@ -143,7 +143,8 @@ class DataProcessor(mp.Process):
 						print("FUCK");
 						pass
 
-					nirsData = XavierNIRSCalc.calculateNIRS(data);
+					# nirsData = XavierNIRSCalc.calculateNIRS(data);
+					nirsData = self.pool.map(XavierNIRSCalc.calculateNIRS, data);
 					try:
 						self.nirsBuffer.put_nowait(nirsData); 
 					except queue.Full:
@@ -151,8 +152,8 @@ class DataProcessor(mp.Process):
 
 
 		except Exception as e:
-			# print("SHITBALLS IM MURDERED");
-			# raise(e);
+			print("SHITBALLS IM MURDERED");
+			raise(e);
 			try:
 				self.MPI.put_nowait(e);
 			except Exception as ei:

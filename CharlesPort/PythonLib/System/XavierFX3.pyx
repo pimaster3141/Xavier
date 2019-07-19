@@ -8,7 +8,7 @@ import os
 
 class DCS(mp.Process):
 	_TIMEOUT = 5000;
-	_READ_SIZE = 262144/2;	#512KB = 524288 base2
+	_READ_SIZE = 262144/4;	#512KB = 524288 base2
 
 	_ENDPOINT_ID = 0x81;
 
