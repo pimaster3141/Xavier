@@ -6,4 +6,6 @@ def calculateNIRS(data, antialias=False, DPF=6):
 
 	data = np.mean(data, axis=1);
 
+	# print(data);
+
 	return data;

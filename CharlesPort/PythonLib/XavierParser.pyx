@@ -85,7 +85,8 @@ def parseNIRS(dataStream):
 	# print(data);
 
 	channelOffsets = np.right_shift(dataStream, 14);
-	dataStream = np.bitwise_and(dataStream, 0x3FFF);
+	# print(channelOffsets)
+	dataStream = np.bitwise_and(dataStream, 0x3FFF, dtype=np.int16);
 
 	cn1 = dataStream[(channelOffsets == 0)];
 	cn2 = dataStream[(channelOffsets == 1)];
