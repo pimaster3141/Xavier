@@ -89,7 +89,7 @@ class GraphWindow():
 			self.flowPlot.showGrid(x=False, y=True);
 
 		if(self.calcNIRS):
-			self.nirsPlot = self.win.addPlot(title="Intensity", labels={'left':('LSB'), 'bottom':('Time', 's')}, row=4, col=0, colspan=2);
+			self.nirsPlot = self.win.addPlot(title="Delta Mu_a", labels={'left':('cm^-1'), 'bottom':('Time', 's')}, row=4, col=0, colspan=2);
 			self.nirsPlot.setMouseEnabled(x=False, y=False);
 			self.flowPlot.showGrid(x=False, y=True);
 
