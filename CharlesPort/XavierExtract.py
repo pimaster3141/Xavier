@@ -97,13 +97,18 @@ def fullExtractMatlab(filename, averages, legacy=None, fs=2.5E6, intg=0.05, fsou
 			legacy = 'True' in value;
 		print("Autoselecting Legacy: " + str(legacy));
 		
-	print("Extracting: " + filename);
+	print("Extracting: " + filename + "_DCS");
 	(g, t, v) = G2Extract.processG2(filename, legacy, fs, intg, fsout, levels, numProcessors);
 	filename = G2Extract.writeG2Matlab(filename, g, t, v, legacy, fs, intg, fsout, saveG2=False);
 	print("Completed G2");
 	(flows, betas, counts, g2a) = FlowExtract.calculateFlow(g, t, averages, fs, rho, no, wavelength, mua, musp, numProcessors);
 	FlowExtract.writeFlowMatlab(filename, flows, betas, counts, g2a, averages, rho, no, wavelength, mua, musp, saveG2=False);
 	print("Completed Flow");
+		
+	print("Extracting: " + filename + "_NIRS");
+	nirs = XavierNIRSExtract(filename, fs, fsout);
+	filename = G2Extract.writeG2Matlab(filename, g, t, v, legacy, fs, intg, fsout, saveG2=False);
+	print("Completed G2");
 
 	del(g);
 	del(t); 

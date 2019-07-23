@@ -2,7 +2,7 @@ import setuptools
 import pyximport; pyximport.install()
 # import G2Extract
 # import HSDCSParser
-import G2Calc
+import XavierG2Calc
 import numpy as np
 from functools import partial
 import os
@@ -25,7 +25,7 @@ def processG2(filename, legacy=False, fs=2.5E6, intg=0.05, fsout=200, levels=16,
 	start = time.time();
 	fsize = os.stat(filename).st_size;
 	windowSize = int(fs*intg);
-	windowShift = int(fs/fsout);
+	windowShift = int(fs/fsout/4)*4;
 	numSamples = np.floor(((fsize/BYTES_PER_SAMPLE)-windowSize)/windowShift)+1;
 
 	tauList = G2Calc.mtAuto(np.ones(windowSize), fs=fs, levels=levels)[:,0];

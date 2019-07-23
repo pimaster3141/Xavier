@@ -1,16 +1,35 @@
 import numpy as np
 import XavierParser
 
-def calculateNIRS(data, antialias=False, DPF=6, rho=2.5):
-	data = XavierParser.parseNIRS(data);
-	data = np.array(data, dtype=np.double);
-	# print(data);
+class NIRSCalc():
+	WEIGHT = 0.01;
+	DPF = [6,6];
+	rho = [2,2];
 
-	data = np.mean(data, axis=1, dtype=np.double);
+	FULLSCALE = 2**14 -1;
+	AC_GAIN = [101,101];
 
-	dmua1 = (data[0]-8192)/101/data[2] * (-1/(DPF*rho));
-	dmua2 = (data[1]-8192)/101/data[3] * (-1/(DPF*rho));
+	def __init__(self, weight=WEIGHT, DPF=DPF, rho=rho, acg=AC_GAIN):
+		assert weight>=0 and weight<=1, "Invalid Weight";
+		self.weight = weight;
+		self.DPF = DPF;
+		self.rho = rho;
+		self.acg = acg;
 
-	# print(data);
+		self.values = np.array([1,1,1,1], dtype=np.double);
 
-	return ([dmua1]);
+	def calculateNIRS(data, antialias=False):
+		data = XavierParser.parseNIRS(data);
+		data = np.array(data, dtype=np.double);
+		# print(data);
+
+		data = np.mean(data, axis=1, dtype=np.double);
+		self.values = data*self.weight + self.values*(1-self.weight);
+
+
+		dmua1 = (data[0]-self.values[0])/self.acg[0]/self.values[2] * (-1/(self.DPF[0]*self.rho[0]));
+		dmua2 = (data[1]-self.values[1])/self.acg[1]/self.values[3] * (-1/(self.DPF[1]*self.rho[1]));
+
+		# print(data);
+
+		return ([dmua1, dmua2]);

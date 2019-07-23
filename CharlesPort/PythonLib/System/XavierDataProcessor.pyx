@@ -58,6 +58,7 @@ class DataProcessor(threading.Thread):
 
 
 		self.calcNIRS = calcNIRS;
+		self.NIRSCalculator = XavierNIRSCalc.NIRSCalc(weight=4/(self.fs*10.0));
 		self.inputBufferNIRS = inputBufferNIRS;
 		self.nirsBuffer = mp.Queue(DataProcessor.QUEUE_DEPTH);
 		
@@ -143,8 +144,10 @@ class DataProcessor(threading.Thread):
 						print("FUCK");
 						pass
 
-					# nirsData = XavierNIRSCalc.calculateNIRS(data);
-					nirsData = self.pool.map(XavierNIRSCalc.calculateNIRS, data);
+					# nirsData = self.pool.map(XavierNIRSCalc.calculateNIRS, data);
+					nirsData=[0]*len(data);
+					for i in len(data):
+						nirsData[i] = (self.NIRSCalculator.calculateNIRS(data[i]));
 					try:
 						self.nirsBuffer.put_nowait(nirsData); 
 					except queue.Full:

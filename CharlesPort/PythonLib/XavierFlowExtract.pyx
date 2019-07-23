@@ -1,6 +1,6 @@
 import setuptools
 import pyximport; pyximport.install()
-import FlowFit
+import XavierFlowFit
 import numpy as np
 import time
 import csv
