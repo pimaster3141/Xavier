@@ -27,6 +27,7 @@ def processG2(filename, legacy=False, fs=2.5E6, intg=0.05, fsout=200, levels=16,
 	windowSize = int(fs*intg);
 	windowShift = int(fs/fsout);
 	numSamples = np.floor(((fsize/BYTES_PER_SAMPLE)-windowSize)/windowShift)+1;
+	# numSamples = np.floor(((fsize/BYTES_PER_SAMPLE))/windowShift);
 
 	tauList = XavierG2Calc.mtAuto(np.ones(windowSize), fs=fs, levels=levels)[:,0];
 
