@@ -18,7 +18,7 @@ class NIRSCalc():
 
 		self.values = np.array([1,1,1,1], dtype=np.double);
 
-	def calculateNIRS(data, antialias=False):
+	def calculateNIRS(self, data, antialias=False):
 		data = XavierParser.parseNIRS(data);
 		data = np.array(data, dtype=np.double);
 		# print(data);

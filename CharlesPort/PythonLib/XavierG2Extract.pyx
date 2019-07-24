@@ -25,10 +25,10 @@ def processG2(filename, legacy=False, fs=2.5E6, intg=0.05, fsout=200, levels=16,
 	start = time.time();
 	fsize = os.stat(filename).st_size;
 	windowSize = int(fs*intg);
-	windowShift = int(fs/fsout/4)*4;
+	windowShift = int(fs/fsout);
 	numSamples = np.floor(((fsize/BYTES_PER_SAMPLE)-windowSize)/windowShift)+1;
 
-	tauList = G2Calc.mtAuto(np.ones(windowSize), fs=fs, levels=levels)[:,0];
+	tauList = XavierG2Calc.mtAuto(np.ones(windowSize), fs=fs, levels=levels)[:,0];
 
 	# print(numSamples);
 	# print(windowShift);
@@ -62,7 +62,7 @@ def seekExtract(startIndex, windowSize, fs, levels, legacy, filename):
 	f.seek(int(startIndex*BYTES_PER_SAMPLE), os.SEEK_SET);
 	data = np.fromfile(f, count=windowSize, dtype=SAMPLE_DTYPE);
 	f.close();
-	(g2Data, vap) = G2Calc.calculateG2(data, fs, levels, legacy);
+	(g2Data, vap) = XavierG2Calc.calculateG2(data, fs, levels, legacy);
 
 	del(data);
 

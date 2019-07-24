@@ -21,7 +21,7 @@ def calculateFlow(g2Data, tauList, averages, fs=2.5E6, rho=2, no=1.33, wavelengt
 		print("Fitting Channel Average: " + str(averages[i]));
 		average = averages[i];
 		g2Avg = np.mean(g2Data[:, :, average[0]:average[1]+1], axis=2);
-		flow, beta = FlowFit.flowFitDual(np.swapaxes(g2Avg, 0, 1), tauList, rho, no, wavelength, mua, musp, numProcessors, chunksize=200, ECC=False);
+		flow, beta = XavierFlowFit.flowFitDual(np.swapaxes(g2Avg, 0, 1), tauList, rho, no, wavelength, mua, musp, numProcessors, chunksize=200, ECC=False);
 		count = fs/g2Avg[0, :];
 
 		flows.append(flow);
