@@ -111,7 +111,7 @@ def fullExtractMatlab(filename, averages, legacy=None, fs=None, intg=0.05, fsout
 	print("Completed Flow");
 		
 	print("Extracting: " + nirsFilename);
-	nirs = XavierNIRSExtract.processNIRS(nirsFilename, clk=fs, fsout=fsout);
+	nirs = XavierNIRSExtract.processNIRS(nirsFilename, clk=fs, intg=intg, fsout=fsout);
 	XavierNIRSExtract.writeNIRSMatlab(filename, nirs);
 	print("Completed G2");
 
