@@ -102,13 +102,13 @@ def fullExtractMatlab(filename, averages, legacy=None, fs=None, intg=0.05, fsout
 			legacy = 'True' in value;
 		print("Autoselecting Legacy: " + str(legacy));
 		
-	print("Extracting: " + dcsFilename);
-	(g, t, v) = XavierG2Extract.processG2(dcsFilename, legacy, fs, intg, fsout, levels, numProcessors);
-	filename = XavierG2Extract.writeG2Matlab(filename, g, t, v, legacy, fs, intg, fsout, saveG2=False);
-	print("Completed G2");
-	(flows, betas, counts, g2a) = XavierFlowExtract.calculateFlow(g, t, averages, fs, rho, no, wavelength, mua, musp, numProcessors);
-	XavierFlowExtract.writeFlowMatlab(filename, flows, betas, counts, g2a, averages, rho, no, wavelength, mua, musp, saveG2=False);
-	print("Completed Flow");
+	# print("Extracting: " + dcsFilename);
+	# (g, t, v) = XavierG2Extract.processG2(dcsFilename, legacy, fs, intg, fsout, levels, numProcessors);
+	# filename = XavierG2Extract.writeG2Matlab(filename, g, t, v, legacy, fs, intg, fsout, saveG2=False);
+	# print("Completed G2");
+	# (flows, betas, counts, g2a) = XavierFlowExtract.calculateFlow(g, t, averages, fs, rho, no, wavelength, mua, musp, numProcessors);
+	# XavierFlowExtract.writeFlowMatlab(filename, flows, betas, counts, g2a, averages, rho, no, wavelength, mua, musp, saveG2=False);
+	# print("Completed Flow");
 		
 	print("Extracting: " + nirsFilename);
 	nirs = XavierNIRSExtract.processNIRS(nirsFilename, clk=fs, intg=intg, fsout=fsout);

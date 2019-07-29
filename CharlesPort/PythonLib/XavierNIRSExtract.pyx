@@ -52,11 +52,11 @@ def processNIRS(filename, clk=2.5E6, intg=0.05, fsout=200, maxBytes=4096*1024*10
 	startIndexes = np.arange(numSamples, dtype=np.uint64)*windowShift;
 
 
-	data=np.zeros((numSamples, 2), dtype=np.float);
+	data=np.zeros((int(numSamples), 2), dtype=np.float);
 
 	f = open(filename, 'rb');
 
-	for i in range(startIndexes):
+	for i in range(len(startIndexes)):
 		f.seek(int(startIndexes[i]*2), os.SEEK_SET);
 		chunk = np.fromfile(f, count=windowSize, dtype=np.uint16);
 		data[i] = NIRSCalculator.calculateNIRS(chunk);
