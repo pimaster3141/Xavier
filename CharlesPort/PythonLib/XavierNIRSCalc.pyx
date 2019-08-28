@@ -32,4 +32,5 @@ class NIRSCalc():
 
 		# print(data);
 
-		return ([dmua1, dmua2]);
+		# return ([dmua1, dmua2]);
+		return(data);
