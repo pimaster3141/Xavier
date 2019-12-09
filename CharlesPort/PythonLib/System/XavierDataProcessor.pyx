@@ -146,7 +146,7 @@ class DataProcessor(threading.Thread):
 
 					# nirsData = self.pool.map(XavierNIRSCalc.calculateNIRS, data);
 					nirsData=[0]*len(data);
-					for i in len(data):
+					for i in range(len(data)):
 						nirsData[i] = (self.NIRSCalculator.calculateNIRS(data[i]));
 					try:
 						self.nirsBuffer.put_nowait(nirsData); 
@@ -156,7 +156,7 @@ class DataProcessor(threading.Thread):
 
 		except Exception as e:
 			print("SHITBALLS IM MURDERED");
-			raise(e);
+#			raise(e);
 			try:
 				self.MPI.put_nowait(e);
 			except Exception as ei:
