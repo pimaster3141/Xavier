@@ -69,7 +69,7 @@ def flowFitSingle(g2Data, tauList, rho=2, no=1.33, wavelength=8.48E-5, mua=0.1, 
 	g1Data = g1Data[:, 0];
 
 	# data = pool.map(fcn, g1Data);
-	data = np.array(list(tqdm.tqdm(pool.imap(fcn, g1Data, chunksize=max(int(len(g1Data)/100), 100)), total=len(g1Data))));
+	data = np.array(list(tqdm.tqdm(pool.imap(fcn, g1Data, chunksize=max(int(len(g1Data)/200/numProcessors), 100)), total=len(g1Data))));
 
 	pool.close();
 	pool.join();
@@ -89,7 +89,7 @@ def flowFitDual(g2Data, tauList, rho=2, no=1.33, wavelength=8.48E-5, mua=0.1, mu
 	fcn = partial(G2Fit, tauList=tauList, SNR=SNR, p0=p0, rho=rho, no=no, wavelength=wavelength, mua=mua, musp=musp, ECC=ECC);
 
 	# data = np.array(pool.map(fcn, g2Data, chunksize=chunksize));
-	data = np.array(list(tqdm.tqdm(pool.imap(fcn, g2Data, chunksize=max(int(len(g2Data)/100), 100)), total=len(g2Data))));
+	data = np.array(list(tqdm.tqdm(pool.imap(fcn, g2Data, chunksize=max(int(len(g2Data)/200/numProcessors), 100)), total=len(g2Data))));
 
 	pool.close();
 	pool.join();

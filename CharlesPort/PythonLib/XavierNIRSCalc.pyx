@@ -27,6 +27,7 @@ class NIRSCalc():
 		self.values = data*self.weight + self.values*(1-self.weight);
 
 
+		#needs to be revised - incorrect
 		dmua1 = (data[0]-self.values[0])/self.acg[0]/self.values[2] * (-1/(self.DPF[0]*self.rho[0]));
 		dmua2 = (data[1]-self.values[1])/self.acg[1]/self.values[3] * (-1/(self.DPF[1]*self.rho[1]));
 
