@@ -1,0 +1,11 @@
+import numpy as np
+import Autocorrelate
+import multipletau as mt
+data = np.random.rand(10000);
+data = np.round(data);
+normalize=False;
+
+out = np.asarray(Autocorrelate.multipleTau(data, 16, normalize));
+out2 = mt.autocorrelate(data, normalize=normalize);
+out2[:,0]=out;
+out2;
