@@ -1,6 +1,6 @@
 # distutils: extra_compile_args=-fopenmp
 # distutils: extra_link_args=-fopenmp
-#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+# distutils: define_macros=NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION
 
 from libc.stdint cimport *
 from libc.math cimport *
@@ -25,7 +25,7 @@ cdef double arraySumProd(double[::1] a, double[::1] b) nogil:
 @cython.cdivision(True)
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef double[::1] multipleTau(double[::1] data, char levels, bint normalize):
+cdef double[::1] multipleTau(double[::1] data, char levels, bint normalize):
 	if(((levels>>1)<<1) != levels):
 		levels = levels + 1;
 
@@ -125,7 +125,7 @@ cpdef double[::1] multipleTau(double[::1] data, char levels, bint normalize):
 @cython.cdivision(True)
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cpdef double[::1] getDelayTimes(int dataLength, char levels, double deltaT):
+cdef double[::1] getDelayTimes(int dataLength, char levels, double deltaT):
 	cdef int k = int(log2(dataLength/levels));
 	cdef int outLength = levels + k * (levels>>1) + 1;
 	cdef int N = dataLength;
@@ -153,7 +153,7 @@ cpdef double[::1] getDelayTimes(int dataLength, char levels, double deltaT):
 
 	return output_view;
 
-cpdef int getReturnLength(int dataLength, char levels) nogil:
+cdef int getReturnLength(int dataLength, char levels) nogil:
 	cdef int k = int(log2(dataLength/levels));
 	cdef int outLength = levels + k * (levels>>1) + 1;
 	return outLength;

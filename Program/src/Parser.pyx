@@ -1,6 +1,6 @@
 # distutils: extra_compile_args=-fopenmp
 # distutils: extra_link_args=-fopenmp
-#define NPY_NO_DEPRECATED_API NPY_1_7_API_VERSION
+# distutils: define_macros=NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION
 
 from libc.stdint cimport uint8_t
 from libc.stdint cimport uint16_t
@@ -19,10 +19,10 @@ cpdef parse(uint8_t[::1] data):
 	cdef long outLength = (length >> 2);
 
 	spadData = np.zeros((4, outLength), dtype=np.uint8);
-	dDataAll = np.zeros((outLength), dtype=np.uint8);
+	dDataAll = np.zeros((4, outLength), dtype=np.uint8);
 	aDataAll = np.zeros((outLength), dtype=np.uint16);
 	cdef uint8_t[:, ::1] spadData_view = spadData;
-	cdef uint8_t[::1] dDataAll_view = dDataAll;
+	cdef uint8_t[:, ::1] dDataAll_view = dDataAll;
 	cdef uint16_t[::1] aDataAll_view = aDataAll;
 
 	cdef uint8_t dValue = 0;
@@ -30,8 +30,13 @@ cpdef parse(uint8_t[::1] data):
 	cdef long j;
 	for i in prange(outLength, nogil=True):
 		j = i << 2;
-		dValue = (data[j] >> 4) & 0x0C;
-		dDataAll_view[i] = dValue | ((data[j+1] >> 6) & 0x03);
+
+		dDataAll_view[0,i] = (data[j] >> 7);
+		dDataAll_view[1,i] = (data[j] >> 6) & 0x01;
+		dDataAll_view[2,i] = (data[j+1] >> 7) & 0x01;
+		dDataAll_view[3,i] = (data[j+1] >> 6) & 0x01;
+		# dValue = (data[j] >> 4) & 0x0C;
+		# dDataAll_view[i] = dValue | ((data[j+1] >> 6) & 0x03);
 
 		spadData_view[0,i] = (data[j] >> 3) & 0x07;
 		spadData_view[1,i] = (data[j]) & 0x07;
@@ -54,10 +59,10 @@ cpdef parse(uint8_t[::1] data):
 		aData_view[(ADCOffset+2) & 0x0003, i] = aDataAll_view[j+2] & 0x3FFF;
 		aData_view[(ADCOffset+3) & 0x0003, i] = aDataAll_view[j+3] & 0x3FFF;
 
-	return spadData_view, aData_view, dDataAll_view
+	return (spadData_view, aData_view, dDataAll_view)
 	# return data;
 
-cpdef parseAll(np.ndarray data):
+cpdef parseAll(uint8_t[:, ::1] data):
 	cdef int depth = data.shape[0];
 	cdef int outLength = data.shape[1] >> 2;
 	cdef int adcLength = outLength >> 2;
@@ -66,7 +71,7 @@ cpdef parseAll(np.ndarray data):
 	dDataAll = np.zeros((depth, outLength), dtype=np.uint8);
 	aData = np.zeros((depth, 4, adcLength), dtype=np.uint16);
 	cdef uint8_t[:, :, ::1] spadData_view = spadData;
-	cdef uint8_t[:, ::1] dDataAll_view = dDataAll;
+	cdef uint8_t[:, :, ::1] dDataAll_view = dDataAll;
 	cdef uint16_t[:, :, ::1] aData_view = aData;
 
 	for i in range(depth):

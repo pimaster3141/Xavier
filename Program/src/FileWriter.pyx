@@ -1,3 +1,8 @@
+# distutils: extra_compile_args=-fopenmp
+# distutils: extra_link_args=-fopenmp
+# distutils: define_macros=NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION
+
+
 from datetime import datetime
 import multiprocessing as mp
 cimport cython
@@ -26,7 +31,7 @@ cdef class FileWriter:
 
 		return;
 
-	def setFilePath(self, filePath):
+	cpdef setFilePath(self, filePath):
 		if not(filePath == None or filePath == ''):
 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
 		else:
@@ -34,7 +39,7 @@ cdef class FileWriter:
 		self.filePath = filePath;
 		return;
 
-	def setWriter(self):
+	cpdef setWriter(self):
 		if(self.filePath == None):
 			self.enableWrite.clear();
 			return;

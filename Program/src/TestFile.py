@@ -51,3 +51,13 @@ levels=32" "out = Autocorrelate.multipleTau(data, levels, normalize);"
 
 
 
+
+
+import FitCore
+import numpy as np
+import G2Calc
+
+delayTimes = G2Calc.getDelayTimes(3276800, 100, 1/10E6);
+output = FitCore.G2Analytical(delayTimes, 1E2, 0.45, 2, 1.33, 7.85E-5, 0.1, 10);
+delayTimes = np.asarray(delayTimes);
+output = np.asarray(output);

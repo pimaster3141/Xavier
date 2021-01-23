@@ -3,6 +3,18 @@
 /* BEGIN: Cython Metadata
 {
     "distutils": {
+        "define_macros": [
+            [
+                "NPY_NO_DEPRECATED_API",
+                "NPY_1_7_API_VERSION"
+            ]
+        ],
+        "extra_compile_args": [
+            "-fopenmp"
+        ],
+        "extra_link_args": [
+            "-fopenmp"
+        ],
         "name": "FileWriter",
         "sources": [
             "FileWriter.pyx"
@@ -820,7 +832,7 @@ static const char *__pyx_f[] = {
 /*--- Type declarations ---*/
 struct __pyx_obj_10FileWriter_FileWriter;
 
-/* "FileWriter.pyx":8
+/* "FileWriter.pyx":13
  * import time
  * 
  * cdef class FileWriter:             # <<<<<<<<<<<<<<
@@ -829,8 +841,16 @@ struct __pyx_obj_10FileWriter_FileWriter;
  */
 struct __pyx_obj_10FileWriter_FileWriter {
   PyObject_HEAD
+  struct __pyx_vtabstruct_10FileWriter_FileWriter *__pyx_vtab;
 };
 
+
+
+struct __pyx_vtabstruct_10FileWriter_FileWriter {
+  PyObject *(*setFilePath)(struct __pyx_obj_10FileWriter_FileWriter *, PyObject *, int __pyx_skip_dispatch);
+  PyObject *(*setWriter)(struct __pyx_obj_10FileWriter_FileWriter *, int __pyx_skip_dispatch);
+};
+static struct __pyx_vtabstruct_10FileWriter_FileWriter *__pyx_vtabptr_10FileWriter_FileWriter;
 
 /* --- Runtime support code (head) --- */
 /* Refnanny.proto */
@@ -1181,6 +1201,9 @@ static PyObject* __Pyx_PyObject_GenericGetAttr(PyObject* obj, PyObject* attr_nam
 #define __Pyx_PyObject_GenericGetAttr PyObject_GenericGetAttr
 #endif
 
+/* SetVTable.proto */
+static int __Pyx_SetVtable(PyObject *dict, void *vtable);
+
 /* SetupReduce.proto */
 static int __Pyx_setup_reduce(PyObject* type_obj);
 
@@ -1225,6 +1248,8 @@ static int __Pyx_check_binary_version(void);
 /* InitStrings.proto */
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
+static PyObject *__pyx_f_10FileWriter_10FileWriter_setFilePath(struct __pyx_obj_10FileWriter_FileWriter *__pyx_v_self, PyObject *__pyx_v_filePath, int __pyx_skip_dispatch); /* proto*/
+static PyObject *__pyx_f_10FileWriter_10FileWriter_setWriter(struct __pyx_obj_10FileWriter_FileWriter *__pyx_v_self, int __pyx_skip_dispatch); /* proto*/
 
 /* Module declarations from 'cython' */
 
@@ -1282,6 +1307,7 @@ static const char __pyx_k_FileWriter[] = "FileWriter";
 static const char __pyx_k_get_nowait[] = "get_nowait";
 static const char __pyx_k_printError[] = "printError";
 static const char __pyx_k_pyx_result[] = "__pyx_result";
+static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_File_Writer[] = "File Writer";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_enableWrite[] = "enableWrite";
@@ -1350,6 +1376,7 @@ static PyObject *__pyx_n_s_pyx_result;
 static PyObject *__pyx_n_s_pyx_state;
 static PyObject *__pyx_n_s_pyx_type;
 static PyObject *__pyx_n_s_pyx_unpickle_FileWriter;
+static PyObject *__pyx_n_s_pyx_vtable;
 static PyObject *__pyx_n_s_queue;
 static PyObject *__pyx_n_s_reduce;
 static PyObject *__pyx_n_s_reduce_cython;
@@ -1389,7 +1416,7 @@ static PyObject *__pyx_tuple__3;
 static PyObject *__pyx_codeobj__4;
 /* Late includes */
 
-/* "FileWriter.pyx":11
+/* "FileWriter.pyx":16
  * 	_UPDATE_TIMEOUT = 5;
  * 
  * 	def __str__(self):             # <<<<<<<<<<<<<<
@@ -1415,7 +1442,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter___str__(CYTHON_UNUSED struct
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__str__", 0);
 
-  /* "FileWriter.pyx":12
+  /* "FileWriter.pyx":17
  * 
  * 	def __str__(self):
  * 		return("File Writer");             # <<<<<<<<<<<<<<
@@ -1427,7 +1454,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter___str__(CYTHON_UNUSED struct
   __pyx_r = __pyx_kp_u_File_Writer;
   goto __pyx_L0;
 
-  /* "FileWriter.pyx":11
+  /* "FileWriter.pyx":16
  * 	_UPDATE_TIMEOUT = 5;
  * 
  * 	def __str__(self):             # <<<<<<<<<<<<<<
@@ -1442,7 +1469,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter___str__(CYTHON_UNUSED struct
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":14
+/* "FileWriter.pyx":19
  * 		return("File Writer");
  * 
  * 	def __init__(self, logger, filePath=None):             # <<<<<<<<<<<<<<
@@ -1486,7 +1513,7 @@ static int __pyx_pw_10FileWriter_10FileWriter_3__init__(PyObject *__pyx_v_self, 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 14, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 19, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -1502,7 +1529,7 @@ static int __pyx_pw_10FileWriter_10FileWriter_3__init__(PyObject *__pyx_v_self, 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 14, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 19, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("FileWriter.FileWriter.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1525,25 +1552,25 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "FileWriter.pyx":15
+  /* "FileWriter.pyx":20
  * 
  * 	def __init__(self, logger, filePath=None):
  * 		self.logger = logger;             # <<<<<<<<<<<<<<
  * 		self.logger.printMesage(self, "Creating File Writer Object");
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger, __pyx_v_logger) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger, __pyx_v_logger) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
 
-  /* "FileWriter.pyx":16
+  /* "FileWriter.pyx":21
  * 	def __init__(self, logger, filePath=None):
  * 		self.logger = logger;
  * 		self.logger.printMesage(self, "Creating File Writer Object");             # <<<<<<<<<<<<<<
  * 
  * 		self.filePath = None;
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_printMesage); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_printMesage); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 21, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -1561,7 +1588,7 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_self), __pyx_kp_u_Creating_File_Writer_Object};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
@@ -1569,13 +1596,13 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
     PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_self), __pyx_kp_u_Creating_File_Writer_Object};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_4, 2+__pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_GOTREF(__pyx_t_1);
   } else
   #endif
   {
-    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2+__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     if (__pyx_t_2) {
       __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2); __pyx_t_2 = NULL;
@@ -1586,32 +1613,32 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
     __Pyx_INCREF(__pyx_kp_u_Creating_File_Writer_Object);
     __Pyx_GIVEREF(__pyx_kp_u_Creating_File_Writer_Object);
     PyTuple_SET_ITEM(__pyx_t_5, 1+__pyx_t_4, __pyx_kp_u_Creating_File_Writer_Object);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   }
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":18
+  /* "FileWriter.pyx":23
  * 		self.logger.printMesage(self, "Creating File Writer Object");
  * 
  * 		self.filePath = None;             # <<<<<<<<<<<<<<
  * 		self.enableWrite = mp.Event();
  * 		self.enableWrite.clear();
  */
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath, Py_None) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath, Py_None) < 0) __PYX_ERR(0, 23, __pyx_L1_error)
 
-  /* "FileWriter.pyx":19
+  /* "FileWriter.pyx":24
  * 
  * 		self.filePath = None;
  * 		self.enableWrite = mp.Event();             # <<<<<<<<<<<<<<
  * 		self.enableWrite.clear();
  * 		self.outFile = None;
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Event); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 19, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Event); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -1626,22 +1653,22 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite, __pyx_t_1) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite, __pyx_t_1) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":20
+  /* "FileWriter.pyx":25
  * 		self.filePath = None;
  * 		self.enableWrite = mp.Event();
  * 		self.enableWrite.clear();             # <<<<<<<<<<<<<<
  * 		self.outFile = None;
  * 		self.filePathQueue = mp.Queue(1);
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_clear); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 20, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_clear); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -1656,30 +1683,30 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
   }
   __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":21
+  /* "FileWriter.pyx":26
  * 		self.enableWrite = mp.Event();
  * 		self.enableWrite.clear();
  * 		self.outFile = None;             # <<<<<<<<<<<<<<
  * 		self.filePathQueue = mp.Queue(1);
  * 
  */
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_outFile, Py_None) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_outFile, Py_None) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
 
-  /* "FileWriter.pyx":22
+  /* "FileWriter.pyx":27
  * 		self.enableWrite.clear();
  * 		self.outFile = None;
  * 		self.filePathQueue = mp.Queue(1);             # <<<<<<<<<<<<<<
  * 
  * 		self.setFilePath(filePath);
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_mp); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Queue); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 22, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Queue); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -1694,75 +1721,45 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_3, __pyx_int_1) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_int_1);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue, __pyx_t_1) < 0) __PYX_ERR(0, 22, __pyx_L1_error)
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue, __pyx_t_1) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":24
+  /* "FileWriter.pyx":29
  * 		self.filePathQueue = mp.Queue(1);
  * 
  * 		self.setFilePath(filePath);             # <<<<<<<<<<<<<<
  * 		self.setWriter();
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_setFilePath); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 24, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_5);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_5, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_3, __pyx_v_filePath) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_filePath);
-  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_10FileWriter_FileWriter *)__pyx_v_self->__pyx_vtab)->setFilePath(__pyx_v_self, __pyx_v_filePath, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":25
+  /* "FileWriter.pyx":30
  * 
  * 		self.setFilePath(filePath);
  * 		self.setWriter();             # <<<<<<<<<<<<<<
  * 
  * 		return;
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_setWriter); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 25, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = NULL;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
-    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_5);
-    if (likely(__pyx_t_3)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-      __Pyx_INCREF(__pyx_t_3);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_5, function);
-    }
-  }
-  __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
+  __pyx_t_1 = ((struct __pyx_vtabstruct_10FileWriter_FileWriter *)__pyx_v_self->__pyx_vtab)->setWriter(__pyx_v_self, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":27
+  /* "FileWriter.pyx":32
  * 		self.setWriter();
  * 
  * 		return;             # <<<<<<<<<<<<<<
  * 
- * 	def setFilePath(self, filePath):
+ * 	cpdef setFilePath(self, filePath):
  */
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "FileWriter.pyx":14
+  /* "FileWriter.pyx":19
  * 		return("File Writer");
  * 
  * 	def __init__(self, logger, filePath=None):             # <<<<<<<<<<<<<<
@@ -1783,13 +1780,225 @@ static int __pyx_pf_10FileWriter_10FileWriter_2__init__(struct __pyx_obj_10FileW
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":29
+/* "FileWriter.pyx":34
  * 		return;
  * 
- * 	def setFilePath(self, filePath):             # <<<<<<<<<<<<<<
+ * 	cpdef setFilePath(self, filePath):             # <<<<<<<<<<<<<<
  * 		if not(filePath == None or filePath == ''):
  * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
  */
+
+static PyObject *__pyx_pw_10FileWriter_10FileWriter_5setFilePath(PyObject *__pyx_v_self, PyObject *__pyx_v_filePath); /*proto*/
+static PyObject *__pyx_f_10FileWriter_10FileWriter_setFilePath(struct __pyx_obj_10FileWriter_FileWriter *__pyx_v_self, PyObject *__pyx_v_filePath, int __pyx_skip_dispatch) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  int __pyx_t_7;
+  PyObject *__pyx_t_8 = NULL;
+  __Pyx_RefNannySetupContext("setFilePath", 0);
+  __Pyx_INCREF(__pyx_v_filePath);
+  /* Check if called by wrapper */
+  if (unlikely(__pyx_skip_dispatch)) ;
+  /* Check if overridden in Python */
+  else if (unlikely((Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0) || (Py_TYPE(((PyObject *)__pyx_v_self))->tp_flags & (Py_TPFLAGS_IS_ABSTRACT | Py_TPFLAGS_HEAPTYPE)))) {
+    #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    static PY_UINT64_T __pyx_tp_dict_version = __PYX_DICT_VERSION_INIT, __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+    if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
+      PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      #endif
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_setFilePath); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_10FileWriter_10FileWriter_5setFilePath)) {
+        __Pyx_XDECREF(__pyx_r);
+        __Pyx_INCREF(__pyx_t_1);
+        __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
+        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+          __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+          if (likely(__pyx_t_4)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+            __Pyx_INCREF(__pyx_t_4);
+            __Pyx_INCREF(function);
+            __Pyx_DECREF_SET(__pyx_t_3, function);
+          }
+        }
+        __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_4, __pyx_v_filePath) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_filePath);
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 34, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __pyx_r = __pyx_t_2;
+        __pyx_t_2 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        goto __pyx_L0;
+      }
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+      __pyx_tp_dict_version = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      __pyx_obj_dict_version = __Pyx_get_object_dict_version(((PyObject *)__pyx_v_self));
+      if (unlikely(__pyx_type_dict_guard != __pyx_tp_dict_version)) {
+        __pyx_tp_dict_version = __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+      }
+      #endif
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    }
+    #endif
+  }
+
+  /* "FileWriter.pyx":35
+ * 
+ * 	cpdef setFilePath(self, filePath):
+ * 		if not(filePath == None or filePath == ''):             # <<<<<<<<<<<<<<
+ * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
+ * 		else:
+ */
+  __pyx_t_1 = PyObject_RichCompare(__pyx_v_filePath, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (!__pyx_t_6) {
+  } else {
+    __pyx_t_5 = __pyx_t_6;
+    goto __pyx_L4_bool_binop_done;
+  }
+  __pyx_t_6 = (__Pyx_PyUnicode_Equals(__pyx_v_filePath, __pyx_kp_u_, Py_EQ)); if (unlikely(__pyx_t_6 < 0)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __pyx_t_5 = __pyx_t_6;
+  __pyx_L4_bool_binop_done:;
+  __pyx_t_6 = ((!__pyx_t_5) != 0);
+  if (__pyx_t_6) {
+
+    /* "FileWriter.pyx":36
+ * 	cpdef setFilePath(self, filePath):
+ * 		if not(filePath == None or filePath == ''):
+ * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);             # <<<<<<<<<<<<<<
+ * 		else:
+ * 			filePath = None;
+ */
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_printMesage); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = PyNumber_Add(__pyx_kp_u_Setting_file_path_name_to, __pyx_v_filePath); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 36, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_4 = NULL;
+    __pyx_t_7 = 0;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+      if (likely(__pyx_t_4)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        __Pyx_INCREF(__pyx_t_4);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __pyx_t_7 = 1;
+      }
+    }
+    #if CYTHON_FAST_PYCALL
+    if (PyFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_self), __pyx_t_2};
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    } else
+    #endif
+    #if CYTHON_FAST_PYCCALL
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+      PyObject *__pyx_temp[3] = {__pyx_t_4, ((PyObject *)__pyx_v_self), __pyx_t_2};
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    } else
+    #endif
+    {
+      __pyx_t_8 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 36, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      if (__pyx_t_4) {
+        __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_4); __pyx_t_4 = NULL;
+      }
+      __Pyx_INCREF(((PyObject *)__pyx_v_self));
+      __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
+      PyTuple_SET_ITEM(__pyx_t_8, 0+__pyx_t_7, ((PyObject *)__pyx_v_self));
+      __Pyx_GIVEREF(__pyx_t_2);
+      PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_7, __pyx_t_2);
+      __pyx_t_2 = 0;
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 36, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+    }
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+    /* "FileWriter.pyx":35
+ * 
+ * 	cpdef setFilePath(self, filePath):
+ * 		if not(filePath == None or filePath == ''):             # <<<<<<<<<<<<<<
+ * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
+ * 		else:
+ */
+    goto __pyx_L3;
+  }
+
+  /* "FileWriter.pyx":38
+ * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
+ * 		else:
+ * 			filePath = None;             # <<<<<<<<<<<<<<
+ * 		self.filePath = filePath;
+ * 		return;
+ */
+  /*else*/ {
+    __Pyx_INCREF(Py_None);
+    __Pyx_DECREF_SET(__pyx_v_filePath, Py_None);
+  }
+  __pyx_L3:;
+
+  /* "FileWriter.pyx":39
+ * 		else:
+ * 			filePath = None;
+ * 		self.filePath = filePath;             # <<<<<<<<<<<<<<
+ * 		return;
+ * 
+ */
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath, __pyx_v_filePath) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
+
+  /* "FileWriter.pyx":40
+ * 			filePath = None;
+ * 		self.filePath = filePath;
+ * 		return;             # <<<<<<<<<<<<<<
+ * 
+ * 	cpdef setWriter(self):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+
+  /* "FileWriter.pyx":34
+ * 		return;
+ * 
+ * 	cpdef setFilePath(self, filePath):             # <<<<<<<<<<<<<<
+ * 		if not(filePath == None or filePath == ''):
+ * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("FileWriter.FileWriter.setFilePath", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_filePath);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
 
 /* Python wrapper */
 static PyObject *__pyx_pw_10FileWriter_10FileWriter_5setFilePath(PyObject *__pyx_v_self, PyObject *__pyx_v_filePath); /*proto*/
@@ -1807,175 +2016,290 @@ static PyObject *__pyx_pw_10FileWriter_10FileWriter_5setFilePath(PyObject *__pyx
 static PyObject *__pyx_pf_10FileWriter_10FileWriter_4setFilePath(struct __pyx_obj_10FileWriter_FileWriter *__pyx_v_self, PyObject *__pyx_v_filePath) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
-  int __pyx_t_1;
-  PyObject *__pyx_t_2 = NULL;
-  int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  PyObject *__pyx_t_6 = NULL;
-  int __pyx_t_7;
-  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("setFilePath", 0);
-  __Pyx_INCREF(__pyx_v_filePath);
-
-  /* "FileWriter.pyx":30
- * 
- * 	def setFilePath(self, filePath):
- * 		if not(filePath == None or filePath == ''):             # <<<<<<<<<<<<<<
- * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
- * 		else:
- */
-  __pyx_t_2 = PyObject_RichCompare(__pyx_v_filePath, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (!__pyx_t_3) {
-  } else {
-    __pyx_t_1 = __pyx_t_3;
-    goto __pyx_L4_bool_binop_done;
-  }
-  __pyx_t_3 = (__Pyx_PyUnicode_Equals(__pyx_v_filePath, __pyx_kp_u_, Py_EQ)); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 30, __pyx_L1_error)
-  __pyx_t_1 = __pyx_t_3;
-  __pyx_L4_bool_binop_done:;
-  __pyx_t_3 = ((!__pyx_t_1) != 0);
-  if (__pyx_t_3) {
-
-    /* "FileWriter.pyx":31
- * 	def setFilePath(self, filePath):
- * 		if not(filePath == None or filePath == ''):
- * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);             # <<<<<<<<<<<<<<
- * 		else:
- * 			filePath = None;
- */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_printMesage); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyNumber_Add(__pyx_kp_u_Setting_file_path_name_to, __pyx_v_filePath); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_6 = NULL;
-    __pyx_t_7 = 0;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
-      __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_5);
-      if (likely(__pyx_t_6)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-        __Pyx_INCREF(__pyx_t_6);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_5, function);
-        __pyx_t_7 = 1;
-      }
-    }
-    #if CYTHON_FAST_PYCALL
-    if (PyFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[3] = {__pyx_t_6, ((PyObject *)__pyx_v_self), __pyx_t_4};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    } else
-    #endif
-    #if CYTHON_FAST_PYCCALL
-    if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
-      PyObject *__pyx_temp[3] = {__pyx_t_6, ((PyObject *)__pyx_v_self), __pyx_t_4};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_7, 2+__pyx_t_7); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    } else
-    #endif
-    {
-      __pyx_t_8 = PyTuple_New(2+__pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 31, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      if (__pyx_t_6) {
-        __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
-      }
-      __Pyx_INCREF(((PyObject *)__pyx_v_self));
-      __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
-      PyTuple_SET_ITEM(__pyx_t_8, 0+__pyx_t_7, ((PyObject *)__pyx_v_self));
-      __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_8, 1+__pyx_t_7, __pyx_t_4);
-      __pyx_t_4 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_8, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 31, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-    }
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-    /* "FileWriter.pyx":30
- * 
- * 	def setFilePath(self, filePath):
- * 		if not(filePath == None or filePath == ''):             # <<<<<<<<<<<<<<
- * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
- * 		else:
- */
-    goto __pyx_L3;
-  }
-
-  /* "FileWriter.pyx":33
- * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
- * 		else:
- * 			filePath = None;             # <<<<<<<<<<<<<<
- * 		self.filePath = filePath;
- * 		return;
- */
-  /*else*/ {
-    __Pyx_INCREF(Py_None);
-    __Pyx_DECREF_SET(__pyx_v_filePath, Py_None);
-  }
-  __pyx_L3:;
-
-  /* "FileWriter.pyx":34
- * 		else:
- * 			filePath = None;
- * 		self.filePath = filePath;             # <<<<<<<<<<<<<<
- * 		return;
- * 
- */
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath, __pyx_v_filePath) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
-
-  /* "FileWriter.pyx":35
- * 			filePath = None;
- * 		self.filePath = filePath;
- * 		return;             # <<<<<<<<<<<<<<
- * 
- * 	def setWriter(self):
- */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __pyx_t_1 = __pyx_f_10FileWriter_10FileWriter_setFilePath(__pyx_v_self, __pyx_v_filePath, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 34, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
-
-  /* "FileWriter.pyx":29
- * 		return;
- * 
- * 	def setFilePath(self, filePath):             # <<<<<<<<<<<<<<
- * 		if not(filePath == None or filePath == ''):
- * 			self.logger.printMesage(self, "Setting file path name to: " + filePath);
- */
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_XDECREF(__pyx_t_6);
-  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_1);
   __Pyx_AddTraceback("FileWriter.FileWriter.setFilePath", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_filePath);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":37
+/* "FileWriter.pyx":42
  * 		return;
  * 
- * 	def setWriter(self):             # <<<<<<<<<<<<<<
+ * 	cpdef setWriter(self):             # <<<<<<<<<<<<<<
  * 		if(self.filePath == None):
  * 			self.enableWrite.clear();
  */
+
+static PyObject *__pyx_pw_10FileWriter_10FileWriter_7setWriter(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyObject *__pyx_f_10FileWriter_10FileWriter_setWriter(struct __pyx_obj_10FileWriter_FileWriter *__pyx_v_self, int __pyx_skip_dispatch) {
+  PyObject *__pyx_v_newFile = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  __Pyx_RefNannySetupContext("setWriter", 0);
+  /* Check if called by wrapper */
+  if (unlikely(__pyx_skip_dispatch)) ;
+  /* Check if overridden in Python */
+  else if (unlikely((Py_TYPE(((PyObject *)__pyx_v_self))->tp_dictoffset != 0) || (Py_TYPE(((PyObject *)__pyx_v_self))->tp_flags & (Py_TPFLAGS_IS_ABSTRACT | Py_TPFLAGS_HEAPTYPE)))) {
+    #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    static PY_UINT64_T __pyx_tp_dict_version = __PYX_DICT_VERSION_INIT, __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+    if (unlikely(!__Pyx_object_dict_version_matches(((PyObject *)__pyx_v_self), __pyx_tp_dict_version, __pyx_obj_dict_version))) {
+      PY_UINT64_T __pyx_type_dict_guard = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      #endif
+      __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_setWriter); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      if (!PyCFunction_Check(__pyx_t_1) || (PyCFunction_GET_FUNCTION(__pyx_t_1) != (PyCFunction)(void*)__pyx_pw_10FileWriter_10FileWriter_7setWriter)) {
+        __Pyx_XDECREF(__pyx_r);
+        __Pyx_INCREF(__pyx_t_1);
+        __pyx_t_3 = __pyx_t_1; __pyx_t_4 = NULL;
+        if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
+          __pyx_t_4 = PyMethod_GET_SELF(__pyx_t_3);
+          if (likely(__pyx_t_4)) {
+            PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+            __Pyx_INCREF(__pyx_t_4);
+            __Pyx_INCREF(function);
+            __Pyx_DECREF_SET(__pyx_t_3, function);
+          }
+        }
+        __pyx_t_2 = (__pyx_t_4) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+        __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
+        if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_2);
+        __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+        __pyx_r = __pyx_t_2;
+        __pyx_t_2 = 0;
+        __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+        goto __pyx_L0;
+      }
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+      __pyx_tp_dict_version = __Pyx_get_tp_dict_version(((PyObject *)__pyx_v_self));
+      __pyx_obj_dict_version = __Pyx_get_object_dict_version(((PyObject *)__pyx_v_self));
+      if (unlikely(__pyx_type_dict_guard != __pyx_tp_dict_version)) {
+        __pyx_tp_dict_version = __pyx_obj_dict_version = __PYX_DICT_VERSION_INIT;
+      }
+      #endif
+      __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+      #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_PYTYPE_LOOKUP && CYTHON_USE_TYPE_SLOTS
+    }
+    #endif
+  }
+
+  /* "FileWriter.pyx":43
+ * 
+ * 	cpdef setWriter(self):
+ * 		if(self.filePath == None):             # <<<<<<<<<<<<<<
+ * 			self.enableWrite.clear();
+ * 			return;
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (__pyx_t_5) {
+
+    /* "FileWriter.pyx":44
+ * 	cpdef setWriter(self):
+ * 		if(self.filePath == None):
+ * 			self.enableWrite.clear();             # <<<<<<<<<<<<<<
+ * 			return;
+ * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
+ */
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_clear); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __pyx_t_1 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_3);
+      if (likely(__pyx_t_1)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+        __Pyx_INCREF(__pyx_t_1);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_3, function);
+      }
+    }
+    __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 44, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+
+    /* "FileWriter.pyx":45
+ * 		if(self.filePath == None):
+ * 			self.enableWrite.clear();
+ * 			return;             # <<<<<<<<<<<<<<
+ * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
+ * 		self.logger.printMesage(self, "Updating output file");
+ */
+    __Pyx_XDECREF(__pyx_r);
+    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+    goto __pyx_L0;
+
+    /* "FileWriter.pyx":43
+ * 
+ * 	cpdef setWriter(self):
+ * 		if(self.filePath == None):             # <<<<<<<<<<<<<<
+ * 			self.enableWrite.clear();
+ * 			return;
+ */
+  }
+
+  /* "FileWriter.pyx":46
+ * 			self.enableWrite.clear();
+ * 			return;
+ * 		newFile = open(self.directory+'/'+self.filePath, 'wb');             # <<<<<<<<<<<<<<
+ * 		self.logger.printMesage(self, "Updating output file");
+ * 		self.outFile = newFile;
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_directory); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_kp_u__2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = PyNumber_Add(__pyx_t_3, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
+  __Pyx_INCREF(__pyx_n_u_wb);
+  __Pyx_GIVEREF(__pyx_n_u_wb);
+  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_n_u_wb);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_v_newFile = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "FileWriter.pyx":47
+ * 			return;
+ * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
+ * 		self.logger.printMesage(self, "Updating output file");             # <<<<<<<<<<<<<<
+ * 		self.outFile = newFile;
+ * 		return;
+ */
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_printMesage); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 47, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = NULL;
+  __pyx_t_6 = 0;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+      __pyx_t_6 = 1;
+    }
+  }
+  #if CYTHON_FAST_PYCALL
+  if (PyFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_self), __pyx_kp_u_Updating_output_file};
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  #if CYTHON_FAST_PYCCALL
+  if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
+    PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_self), __pyx_kp_u_Updating_output_file};
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_6, 2+__pyx_t_6); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_GOTREF(__pyx_t_1);
+  } else
+  #endif
+  {
+    __pyx_t_4 = PyTuple_New(2+__pyx_t_6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    if (__pyx_t_2) {
+      __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2); __pyx_t_2 = NULL;
+    }
+    __Pyx_INCREF(((PyObject *)__pyx_v_self));
+    __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
+    PyTuple_SET_ITEM(__pyx_t_4, 0+__pyx_t_6, ((PyObject *)__pyx_v_self));
+    __Pyx_INCREF(__pyx_kp_u_Updating_output_file);
+    __Pyx_GIVEREF(__pyx_kp_u_Updating_output_file);
+    PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_6, __pyx_kp_u_Updating_output_file);
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_1);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  }
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "FileWriter.pyx":48
+ * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
+ * 		self.logger.printMesage(self, "Updating output file");
+ * 		self.outFile = newFile;             # <<<<<<<<<<<<<<
+ * 		return;
+ * 
+ */
+  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_outFile, __pyx_v_newFile) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
+
+  /* "FileWriter.pyx":49
+ * 		self.logger.printMesage(self, "Updating output file");
+ * 		self.outFile = newFile;
+ * 		return;             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+
+  /* "FileWriter.pyx":42
+ * 		return;
+ * 
+ * 	cpdef setWriter(self):             # <<<<<<<<<<<<<<
+ * 		if(self.filePath == None):
+ * 			self.enableWrite.clear();
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_AddTraceback("FileWriter.FileWriter.setWriter", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_newFile);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
 
 /* Python wrapper */
 static PyObject *__pyx_pw_10FileWriter_10FileWriter_7setWriter(PyObject *__pyx_v_self, CYTHON_UNUSED PyObject *unused); /*proto*/
@@ -1991,216 +2315,29 @@ static PyObject *__pyx_pw_10FileWriter_10FileWriter_7setWriter(PyObject *__pyx_v
 }
 
 static PyObject *__pyx_pf_10FileWriter_10FileWriter_6setWriter(struct __pyx_obj_10FileWriter_FileWriter *__pyx_v_self) {
-  PyObject *__pyx_v_newFile = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  int __pyx_t_3;
-  PyObject *__pyx_t_4 = NULL;
-  int __pyx_t_5;
-  PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("setWriter", 0);
-
-  /* "FileWriter.pyx":38
- * 
- * 	def setWriter(self):
- * 		if(self.filePath == None):             # <<<<<<<<<<<<<<
- * 			self.enableWrite.clear();
- * 			return;
- */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 38, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 38, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (__pyx_t_3) {
-
-    /* "FileWriter.pyx":39
- * 	def setWriter(self):
- * 		if(self.filePath == None):
- * 			self.enableWrite.clear();             # <<<<<<<<<<<<<<
- * 			return;
- * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
- */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_clear); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 39, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __pyx_t_1 = NULL;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-      __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_4);
-      if (likely(__pyx_t_1)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-        __Pyx_INCREF(__pyx_t_1);
-        __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_4, function);
-      }
-    }
-    __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_4);
-    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 39, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-
-    /* "FileWriter.pyx":40
- * 		if(self.filePath == None):
- * 			self.enableWrite.clear();
- * 			return;             # <<<<<<<<<<<<<<
- * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
- * 		self.logger.printMesage(self, "Updating output file");
- */
-    __Pyx_XDECREF(__pyx_r);
-    __pyx_r = Py_None; __Pyx_INCREF(Py_None);
-    goto __pyx_L0;
-
-    /* "FileWriter.pyx":38
- * 
- * 	def setWriter(self):
- * 		if(self.filePath == None):             # <<<<<<<<<<<<<<
- * 			self.enableWrite.clear();
- * 			return;
- */
-  }
-
-  /* "FileWriter.pyx":41
- * 			self.enableWrite.clear();
- * 			return;
- * 		newFile = open(self.directory+'/'+self.filePath, 'wb');             # <<<<<<<<<<<<<<
- * 		self.logger.printMesage(self, "Updating output file");
- * 		self.outFile = newFile;
- */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_directory); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = PyNumber_Add(__pyx_t_2, __pyx_kp_u__2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = PyNumber_Add(__pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_GIVEREF(__pyx_t_1);
-  PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
-  __Pyx_INCREF(__pyx_n_u_wb);
-  __Pyx_GIVEREF(__pyx_n_u_wb);
-  PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_n_u_wb);
-  __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_open, __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_v_newFile = __pyx_t_1;
-  __pyx_t_1 = 0;
-
-  /* "FileWriter.pyx":42
- * 			return;
- * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
- * 		self.logger.printMesage(self, "Updating output file");             # <<<<<<<<<<<<<<
- * 		self.outFile = newFile;
- * 		return;
- */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 42, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_printMesage); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 42, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = NULL;
-  __pyx_t_5 = 0;
-  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_4))) {
-    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_4);
-    if (likely(__pyx_t_2)) {
-      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_4);
-      __Pyx_INCREF(__pyx_t_2);
-      __Pyx_INCREF(function);
-      __Pyx_DECREF_SET(__pyx_t_4, function);
-      __pyx_t_5 = 1;
-    }
-  }
-  #if CYTHON_FAST_PYCALL
-  if (PyFunction_Check(__pyx_t_4)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_self), __pyx_kp_u_Updating_output_file};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  #if CYTHON_FAST_PYCCALL
-  if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
-    PyObject *__pyx_temp[3] = {__pyx_t_2, ((PyObject *)__pyx_v_self), __pyx_kp_u_Updating_output_file};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
-    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __Pyx_GOTREF(__pyx_t_1);
-  } else
-  #endif
-  {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 42, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_6);
-    if (__pyx_t_2) {
-      __Pyx_GIVEREF(__pyx_t_2); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_2); __pyx_t_2 = NULL;
-    }
-    __Pyx_INCREF(((PyObject *)__pyx_v_self));
-    __Pyx_GIVEREF(((PyObject *)__pyx_v_self));
-    PyTuple_SET_ITEM(__pyx_t_6, 0+__pyx_t_5, ((PyObject *)__pyx_v_self));
-    __Pyx_INCREF(__pyx_kp_u_Updating_output_file);
-    __Pyx_GIVEREF(__pyx_kp_u_Updating_output_file);
-    PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, __pyx_kp_u_Updating_output_file);
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  }
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-
-  /* "FileWriter.pyx":43
- * 		newFile = open(self.directory+'/'+self.filePath, 'wb');
- * 		self.logger.printMesage(self, "Updating output file");
- * 		self.outFile = newFile;             # <<<<<<<<<<<<<<
- * 		return;
- * 
- */
-  if (__Pyx_PyObject_SetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_outFile, __pyx_v_newFile) < 0) __PYX_ERR(0, 43, __pyx_L1_error)
-
-  /* "FileWriter.pyx":44
- * 		self.logger.printMesage(self, "Updating output file");
- * 		self.outFile = newFile;
- * 		return;             # <<<<<<<<<<<<<<
- * 
- * 
- */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __pyx_t_1 = __pyx_f_10FileWriter_10FileWriter_setWriter(__pyx_v_self, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
   goto __pyx_L0;
-
-  /* "FileWriter.pyx":37
- * 		return;
- * 
- * 	def setWriter(self):             # <<<<<<<<<<<<<<
- * 		if(self.filePath == None):
- * 			self.enableWrite.clear();
- */
 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_AddTraceback("FileWriter.FileWriter.setWriter", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_newFile);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":49
+/* "FileWriter.pyx":54
  * 	#public methods below:
  * 
  * 	def updateFilePath(self, filePath):             # <<<<<<<<<<<<<<
@@ -2230,37 +2367,37 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_8updateFilePath(struct __pyx
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("updateFilePath", 0);
 
-  /* "FileWriter.pyx":50
+  /* "FileWriter.pyx":55
  * 
  * 	def updateFilePath(self, filePath):
  * 		self.filePathQueue.put(filePath, timeout=FileWriter._UPDATE_TIMEOUT);             # <<<<<<<<<<<<<<
  * 		return;
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_put); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_put); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_filePath);
   __Pyx_GIVEREF(__pyx_v_filePath);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_filePath);
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_10FileWriter_FileWriter), __pyx_n_s_UPDATE_TIMEOUT); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_10FileWriter_FileWriter), __pyx_n_s_UPDATE_TIMEOUT); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_timeout, __pyx_t_4) < 0) __PYX_ERR(0, 50, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_timeout, __pyx_t_4) < 0) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 55, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "FileWriter.pyx":51
+  /* "FileWriter.pyx":56
  * 	def updateFilePath(self, filePath):
  * 		self.filePathQueue.put(filePath, timeout=FileWriter._UPDATE_TIMEOUT);
  * 		return;             # <<<<<<<<<<<<<<
@@ -2271,7 +2408,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_8updateFilePath(struct __pyx
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
 
-  /* "FileWriter.pyx":49
+  /* "FileWriter.pyx":54
  * 	#public methods below:
  * 
  * 	def updateFilePath(self, filePath):             # <<<<<<<<<<<<<<
@@ -2293,7 +2430,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_8updateFilePath(struct __pyx
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":53
+/* "FileWriter.pyx":58
  * 		return;
  * 
  * 	def enableWrite(self):             # <<<<<<<<<<<<<<
@@ -2324,32 +2461,32 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_10enableWrite(struct __pyx_o
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("enableWrite", 0);
 
-  /* "FileWriter.pyx":54
+  /* "FileWriter.pyx":59
  * 
  * 	def enableWrite(self):
  * 		if not(self.filePath == None):             # <<<<<<<<<<<<<<
  * 			self.enableWrite.set();
  * 		return;
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePath); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_t_1, Py_None, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_4 = ((!__pyx_t_3) != 0);
   if (__pyx_t_4) {
 
-    /* "FileWriter.pyx":55
+    /* "FileWriter.pyx":60
  * 	def enableWrite(self):
  * 		if not(self.filePath == None):
  * 			self.enableWrite.set();             # <<<<<<<<<<<<<<
  * 		return;
  * 
  */
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_set); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 55, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_set); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = NULL;
@@ -2364,12 +2501,12 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_10enableWrite(struct __pyx_o
     }
     __pyx_t_2 = (__pyx_t_1) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_1) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "FileWriter.pyx":54
+    /* "FileWriter.pyx":59
  * 
  * 	def enableWrite(self):
  * 		if not(self.filePath == None):             # <<<<<<<<<<<<<<
@@ -2378,7 +2515,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_10enableWrite(struct __pyx_o
  */
   }
 
-  /* "FileWriter.pyx":56
+  /* "FileWriter.pyx":61
  * 		if not(self.filePath == None):
  * 			self.enableWrite.set();
  * 		return;             # <<<<<<<<<<<<<<
@@ -2389,7 +2526,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_10enableWrite(struct __pyx_o
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
 
-  /* "FileWriter.pyx":53
+  /* "FileWriter.pyx":58
  * 		return;
  * 
  * 	def enableWrite(self):             # <<<<<<<<<<<<<<
@@ -2410,7 +2547,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_10enableWrite(struct __pyx_o
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":58
+/* "FileWriter.pyx":63
  * 		return;
  * 
  * 	def disableWrite(self):             # <<<<<<<<<<<<<<
@@ -2439,16 +2576,16 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_12disableWrite(struct __pyx_
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("disableWrite", 0);
 
-  /* "FileWriter.pyx":59
+  /* "FileWriter.pyx":64
  * 
  * 	def disableWrite(self):
  * 		self.enableWrite.clear();             # <<<<<<<<<<<<<<
  * 		return;
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_clear); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_clear); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2463,12 +2600,12 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_12disableWrite(struct __pyx_
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":60
+  /* "FileWriter.pyx":65
  * 	def disableWrite(self):
  * 		self.enableWrite.clear();
  * 		return;             # <<<<<<<<<<<<<<
@@ -2479,7 +2616,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_12disableWrite(struct __pyx_
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
 
-  /* "FileWriter.pyx":58
+  /* "FileWriter.pyx":63
  * 		return;
  * 
  * 	def disableWrite(self):             # <<<<<<<<<<<<<<
@@ -2500,7 +2637,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_12disableWrite(struct __pyx_
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":65
+/* "FileWriter.pyx":70
  * 	#must be called from creating thread below:
  * 
  * 	def writeData(self, data):             # <<<<<<<<<<<<<<
@@ -2530,16 +2667,16 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_14writeData(struct __pyx_obj
   int __pyx_t_4;
   __Pyx_RefNannySetupContext("writeData", 0);
 
-  /* "FileWriter.pyx":66
+  /* "FileWriter.pyx":71
  * 
  * 	def writeData(self, data):
  * 		if(self.enableWrite.is_set()):             # <<<<<<<<<<<<<<
  * 			self.outFile.write(data);
  * 		return;
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_enableWrite); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_is_set); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_is_set); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -2554,23 +2691,23 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_14writeData(struct __pyx_obj
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 66, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely(__pyx_t_4 < 0)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   if (__pyx_t_4) {
 
-    /* "FileWriter.pyx":67
+    /* "FileWriter.pyx":72
  * 	def writeData(self, data):
  * 		if(self.enableWrite.is_set()):
  * 			self.outFile.write(data);             # <<<<<<<<<<<<<<
  * 		return;
  * 
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_outFile); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_outFile); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_write); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 67, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_write); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -2585,12 +2722,12 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_14writeData(struct __pyx_obj
     }
     __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, __pyx_v_data) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_data);
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 67, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "FileWriter.pyx":66
+    /* "FileWriter.pyx":71
  * 
  * 	def writeData(self, data):
  * 		if(self.enableWrite.is_set()):             # <<<<<<<<<<<<<<
@@ -2599,7 +2736,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_14writeData(struct __pyx_obj
  */
   }
 
-  /* "FileWriter.pyx":68
+  /* "FileWriter.pyx":73
  * 		if(self.enableWrite.is_set()):
  * 			self.outFile.write(data);
  * 		return;             # <<<<<<<<<<<<<<
@@ -2610,7 +2747,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_14writeData(struct __pyx_obj
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
 
-  /* "FileWriter.pyx":65
+  /* "FileWriter.pyx":70
  * 	#must be called from creating thread below:
  * 
  * 	def writeData(self, data):             # <<<<<<<<<<<<<<
@@ -2631,7 +2768,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_14writeData(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":70
+/* "FileWriter.pyx":75
  * 		return;
  * 
  * 	def writerUpdateTasks(self):             # <<<<<<<<<<<<<<
@@ -2678,7 +2815,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
   PyObject *__pyx_t_19 = NULL;
   __Pyx_RefNannySetupContext("writerUpdateTasks", 0);
 
-  /* "FileWriter.pyx":71
+  /* "FileWriter.pyx":76
  * 
  * 	def writerUpdateTasks(self):
  * 		try:             # <<<<<<<<<<<<<<
@@ -2694,16 +2831,16 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "FileWriter.pyx":72
+      /* "FileWriter.pyx":77
  * 	def writerUpdateTasks(self):
  * 		try:
  * 			filePath = self.filePathQueue.get_nowait();             # <<<<<<<<<<<<<<
  * 			self.setFilePath(filePath);
  * 			self.setWriter();
  */
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 72, __pyx_L3_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 77, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_get_nowait); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 72, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_get_nowait); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 77, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_5 = NULL;
@@ -2718,65 +2855,35 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
       }
       __pyx_t_4 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 72, __pyx_L3_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 77, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_v_filePath = __pyx_t_4;
       __pyx_t_4 = 0;
 
-      /* "FileWriter.pyx":73
+      /* "FileWriter.pyx":78
  * 		try:
  * 			filePath = self.filePathQueue.get_nowait();
  * 			self.setFilePath(filePath);             # <<<<<<<<<<<<<<
  * 			self.setWriter();
  * 		except queue.empty as e:
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_setFilePath); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 73, __pyx_L3_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_5 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
-        __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_6);
-        if (likely(__pyx_t_5)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-          __Pyx_INCREF(__pyx_t_5);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_6, function);
-        }
-      }
-      __pyx_t_4 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_5, __pyx_v_filePath) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_filePath);
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 73, __pyx_L3_error)
+      __pyx_t_4 = ((struct __pyx_vtabstruct_10FileWriter_FileWriter *)__pyx_v_self->__pyx_vtab)->setFilePath(__pyx_v_self, __pyx_v_filePath, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 78, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "FileWriter.pyx":74
+      /* "FileWriter.pyx":79
  * 			filePath = self.filePathQueue.get_nowait();
  * 			self.setFilePath(filePath);
  * 			self.setWriter();             # <<<<<<<<<<<<<<
  * 		except queue.empty as e:
  * 			return;
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_setWriter); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 74, __pyx_L3_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_5 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
-        __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_6);
-        if (likely(__pyx_t_5)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-          __Pyx_INCREF(__pyx_t_5);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_6, function);
-        }
-      }
-      __pyx_t_4 = (__pyx_t_5) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 74, __pyx_L3_error)
+      __pyx_t_4 = ((struct __pyx_vtabstruct_10FileWriter_FileWriter *)__pyx_v_self->__pyx_vtab)->setWriter(__pyx_v_self, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 79, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-      /* "FileWriter.pyx":71
+      /* "FileWriter.pyx":76
  * 
  * 	def writerUpdateTasks(self):
  * 		try:             # <<<<<<<<<<<<<<
@@ -2793,7 +2900,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "FileWriter.pyx":75
+    /* "FileWriter.pyx":80
  * 			self.setFilePath(filePath);
  * 			self.setWriter();
  * 		except queue.empty as e:             # <<<<<<<<<<<<<<
@@ -2801,9 +2908,9 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
  * 		except Exception as e:
  */
     __Pyx_ErrFetch(&__pyx_t_4, &__pyx_t_6, &__pyx_t_5);
-    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_queue); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 75, __pyx_L5_except_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_queue); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 80, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_7);
-    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_empty); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 75, __pyx_L5_except_error)
+    __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_empty); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 80, __pyx_L5_except_error)
     __Pyx_GOTREF(__pyx_t_8);
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
     __pyx_t_9 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_4, __pyx_t_8);
@@ -2812,7 +2919,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
     __pyx_t_4 = 0; __pyx_t_6 = 0; __pyx_t_5 = 0;
     if (__pyx_t_9) {
       __Pyx_AddTraceback("FileWriter.FileWriter.writerUpdateTasks", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_6, &__pyx_t_4) < 0) __PYX_ERR(0, 75, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_5, &__pyx_t_6, &__pyx_t_4) < 0) __PYX_ERR(0, 80, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_4);
@@ -2820,7 +2927,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
       __pyx_v_e = __pyx_t_6;
       /*try:*/ {
 
-        /* "FileWriter.pyx":76
+        /* "FileWriter.pyx":81
  * 			self.setWriter();
  * 		except queue.empty as e:
  * 			return;             # <<<<<<<<<<<<<<
@@ -2835,7 +2942,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
         goto __pyx_L13_return;
       }
 
-      /* "FileWriter.pyx":75
+      /* "FileWriter.pyx":80
  * 			self.setFilePath(filePath);
  * 			self.setWriter();
  * 		except queue.empty as e:             # <<<<<<<<<<<<<<
@@ -2855,7 +2962,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
       }
     }
 
-    /* "FileWriter.pyx":77
+    /* "FileWriter.pyx":82
  * 		except queue.empty as e:
  * 			return;
  * 		except Exception as e:             # <<<<<<<<<<<<<<
@@ -2865,7 +2972,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
     __pyx_t_9 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
     if (__pyx_t_9) {
       __Pyx_AddTraceback("FileWriter.FileWriter.writerUpdateTasks", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_6, &__pyx_t_5) < 0) __PYX_ERR(0, 77, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_4, &__pyx_t_6, &__pyx_t_5) < 0) __PYX_ERR(0, 82, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_5);
@@ -2873,16 +2980,16 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
       __pyx_v_e = __pyx_t_6;
       /*try:*/ {
 
-        /* "FileWriter.pyx":78
+        /* "FileWriter.pyx":83
  * 			return;
  * 		except Exception as e:
  * 			self.logger.printError(self, e);             # <<<<<<<<<<<<<<
  * 			return;
  * 		return;
  */
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 78, __pyx_L21_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_logger); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 83, __pyx_L21_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_printError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 78, __pyx_L21_error)
+        __pyx_t_11 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_printError); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 83, __pyx_L21_error)
         __Pyx_GOTREF(__pyx_t_11);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __pyx_t_7 = NULL;
@@ -2900,7 +3007,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_11)) {
           PyObject *__pyx_temp[3] = {__pyx_t_7, ((PyObject *)__pyx_v_self), __pyx_v_e};
-          __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 78, __pyx_L21_error)
+          __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L21_error)
           __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
           __Pyx_GOTREF(__pyx_t_8);
         } else
@@ -2908,13 +3015,13 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_11)) {
           PyObject *__pyx_temp[3] = {__pyx_t_7, ((PyObject *)__pyx_v_self), __pyx_v_e};
-          __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 78, __pyx_L21_error)
+          __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_11, __pyx_temp+1-__pyx_t_9, 2+__pyx_t_9); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L21_error)
           __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
           __Pyx_GOTREF(__pyx_t_8);
         } else
         #endif
         {
-          __pyx_t_12 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 78, __pyx_L21_error)
+          __pyx_t_12 = PyTuple_New(2+__pyx_t_9); if (unlikely(!__pyx_t_12)) __PYX_ERR(0, 83, __pyx_L21_error)
           __Pyx_GOTREF(__pyx_t_12);
           if (__pyx_t_7) {
             __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_12, 0, __pyx_t_7); __pyx_t_7 = NULL;
@@ -2925,14 +3032,14 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
           __Pyx_INCREF(__pyx_v_e);
           __Pyx_GIVEREF(__pyx_v_e);
           PyTuple_SET_ITEM(__pyx_t_12, 1+__pyx_t_9, __pyx_v_e);
-          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_12, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 78, __pyx_L21_error)
+          __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_11, __pyx_t_12, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 83, __pyx_L21_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_12); __pyx_t_12 = 0;
         }
         __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "FileWriter.pyx":79
+        /* "FileWriter.pyx":84
  * 		except Exception as e:
  * 			self.logger.printError(self, e);
  * 			return;             # <<<<<<<<<<<<<<
@@ -2947,7 +3054,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
         goto __pyx_L20_return;
       }
 
-      /* "FileWriter.pyx":77
+      /* "FileWriter.pyx":82
  * 		except queue.empty as e:
  * 			return;
  * 		except Exception as e:             # <<<<<<<<<<<<<<
@@ -3005,7 +3112,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
     goto __pyx_L5_except_error;
     __pyx_L5_except_error:;
 
-    /* "FileWriter.pyx":71
+    /* "FileWriter.pyx":76
  * 
  * 	def writerUpdateTasks(self):
  * 		try:             # <<<<<<<<<<<<<<
@@ -3026,7 +3133,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
     __pyx_L8_try_end:;
   }
 
-  /* "FileWriter.pyx":80
+  /* "FileWriter.pyx":85
  * 			self.logger.printError(self, e);
  * 			return;
  * 		return;             # <<<<<<<<<<<<<<
@@ -3037,7 +3144,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
   __pyx_r = Py_None; __Pyx_INCREF(Py_None);
   goto __pyx_L0;
 
-  /* "FileWriter.pyx":70
+  /* "FileWriter.pyx":75
  * 		return;
  * 
  * 	def writerUpdateTasks(self):             # <<<<<<<<<<<<<<
@@ -3064,7 +3171,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_16writerUpdateTasks(struct _
   return __pyx_r;
 }
 
-/* "FileWriter.pyx":82
+/* "FileWriter.pyx":87
  * 		return;
  * 
  * 	def cleanup(self):             # <<<<<<<<<<<<<<
@@ -3102,16 +3209,16 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
   int __pyx_t_12;
   __Pyx_RefNannySetupContext("cleanup", 0);
 
-  /* "FileWriter.pyx":83
+  /* "FileWriter.pyx":88
  * 
  * 	def cleanup(self):
  * 		time.sleep(0.5);             # <<<<<<<<<<<<<<
  * 		while(True):
  * 			try:
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_time); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_time); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_sleep); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_sleep); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -3126,12 +3233,12 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_2, __pyx_float_0_5) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_float_0_5);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 83, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":84
+  /* "FileWriter.pyx":89
  * 	def cleanup(self):
  * 		time.sleep(0.5);
  * 		while(True):             # <<<<<<<<<<<<<<
@@ -3140,7 +3247,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
  */
   while (1) {
 
-    /* "FileWriter.pyx":85
+    /* "FileWriter.pyx":90
  * 		time.sleep(0.5);
  * 		while(True):
  * 			try:             # <<<<<<<<<<<<<<
@@ -3156,16 +3263,16 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
       __Pyx_XGOTREF(__pyx_t_6);
       /*try:*/ {
 
-        /* "FileWriter.pyx":86
+        /* "FileWriter.pyx":91
  * 		while(True):
  * 			try:
  * 				(self.filePathQueue.get(False));             # <<<<<<<<<<<<<<
  * 			except queue.Empty:
  * 				time.sleep(0.5)    # Give tasks a chance to put more data in
  */
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L5_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_get); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 86, __pyx_L5_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_get); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 91, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_t_3 = NULL;
@@ -3180,12 +3287,12 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
         }
         __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_3, Py_False) : __Pyx_PyObject_CallOneArg(__pyx_t_2, Py_False);
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 86, __pyx_L5_error)
+        if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 91, __pyx_L5_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
         __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-        /* "FileWriter.pyx":85
+        /* "FileWriter.pyx":90
  * 		time.sleep(0.5);
  * 		while(True):
  * 			try:             # <<<<<<<<<<<<<<
@@ -3202,7 +3309,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
       __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-      /* "FileWriter.pyx":87
+      /* "FileWriter.pyx":92
  * 			try:
  * 				(self.filePathQueue.get(False));
  * 			except queue.Empty:             # <<<<<<<<<<<<<<
@@ -3210,9 +3317,9 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
  * 				if not self.filePathQueue.empty():
  */
       __Pyx_ErrFetch(&__pyx_t_1, &__pyx_t_2, &__pyx_t_3);
-      __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_queue); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 87, __pyx_L7_except_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_queue); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 92, __pyx_L7_except_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_Empty); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 87, __pyx_L7_except_error)
+      __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_Empty); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 92, __pyx_L7_except_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_9 = __Pyx_PyErr_GivenExceptionMatches(__pyx_t_1, __pyx_t_8);
@@ -3221,21 +3328,21 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
       __pyx_t_1 = 0; __pyx_t_2 = 0; __pyx_t_3 = 0;
       if (__pyx_t_9) {
         __Pyx_AddTraceback("FileWriter.FileWriter.cleanup", __pyx_clineno, __pyx_lineno, __pyx_filename);
-        if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_2, &__pyx_t_1) < 0) __PYX_ERR(0, 87, __pyx_L7_except_error)
+        if (__Pyx_GetException(&__pyx_t_3, &__pyx_t_2, &__pyx_t_1) < 0) __PYX_ERR(0, 92, __pyx_L7_except_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_GOTREF(__pyx_t_1);
 
-        /* "FileWriter.pyx":88
+        /* "FileWriter.pyx":93
  * 				(self.filePathQueue.get(False));
  * 			except queue.Empty:
  * 				time.sleep(0.5)    # Give tasks a chance to put more data in             # <<<<<<<<<<<<<<
  * 				if not self.filePathQueue.empty():
  * 					continue
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_time); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 88, __pyx_L7_except_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_time); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 93, __pyx_L7_except_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_sleep); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 88, __pyx_L7_except_error)
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_sleep); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 93, __pyx_L7_except_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __pyx_t_7 = NULL;
@@ -3250,21 +3357,21 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
         }
         __pyx_t_8 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_7, __pyx_float_0_5) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_float_0_5);
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 88, __pyx_L7_except_error)
+        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 93, __pyx_L7_except_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-        /* "FileWriter.pyx":89
+        /* "FileWriter.pyx":94
  * 			except queue.Empty:
  * 				time.sleep(0.5)    # Give tasks a chance to put more data in
  * 				if not self.filePathQueue.empty():             # <<<<<<<<<<<<<<
  * 					continue
  * 				else:
  */
-        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 89, __pyx_L7_except_error)
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 94, __pyx_L7_except_error)
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_empty); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 89, __pyx_L7_except_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_empty); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 94, __pyx_L7_except_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __pyx_t_10 = NULL;
@@ -3279,15 +3386,15 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
         }
         __pyx_t_8 = (__pyx_t_10) ? __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_10) : __Pyx_PyObject_CallNoArg(__pyx_t_7);
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 89, __pyx_L7_except_error)
+        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 94, __pyx_L7_except_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 89, __pyx_L7_except_error)
+        __pyx_t_11 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_11 < 0)) __PYX_ERR(0, 94, __pyx_L7_except_error)
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __pyx_t_12 = ((!__pyx_t_11) != 0);
         if (__pyx_t_12) {
 
-          /* "FileWriter.pyx":90
+          /* "FileWriter.pyx":95
  * 				time.sleep(0.5)    # Give tasks a chance to put more data in
  * 				if not self.filePathQueue.empty():
  * 					continue             # <<<<<<<<<<<<<<
@@ -3296,7 +3403,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
  */
           goto __pyx_L14_except_continue;
 
-          /* "FileWriter.pyx":89
+          /* "FileWriter.pyx":94
  * 			except queue.Empty:
  * 				time.sleep(0.5)    # Give tasks a chance to put more data in
  * 				if not self.filePathQueue.empty():             # <<<<<<<<<<<<<<
@@ -3305,7 +3412,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
  */
         }
 
-        /* "FileWriter.pyx":92
+        /* "FileWriter.pyx":97
  * 					continue
  * 				else:
  * 					break;             # <<<<<<<<<<<<<<
@@ -3329,7 +3436,7 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
       goto __pyx_L7_except_error;
       __pyx_L7_except_error:;
 
-      /* "FileWriter.pyx":85
+      /* "FileWriter.pyx":90
  * 		time.sleep(0.5);
  * 		while(True):
  * 			try:             # <<<<<<<<<<<<<<
@@ -3359,15 +3466,15 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
   }
   __pyx_L4_break:;
 
-  /* "FileWriter.pyx":93
+  /* "FileWriter.pyx":98
  * 				else:
  * 					break;
  * 		self.filePathQueue.close();             # <<<<<<<<<<<<<<
  * 		self.filePathQueue.cancel_join_thread();
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -3382,19 +3489,19 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
   }
   __pyx_t_1 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 93, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":94
+  /* "FileWriter.pyx":99
  * 					break;
  * 		self.filePathQueue.close();
  * 		self.filePathQueue.cancel_join_thread();             # <<<<<<<<<<<<<<
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_filePathQueue); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_cancel_join_thread); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 94, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_cancel_join_thread); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -3409,12 +3516,12 @@ static PyObject *__pyx_pf_10FileWriter_10FileWriter_18cleanup(struct __pyx_obj_1
   }
   __pyx_t_1 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 94, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "FileWriter.pyx":82
+  /* "FileWriter.pyx":87
  * 		return;
  * 
  * 	def cleanup(self):             # <<<<<<<<<<<<<<
@@ -4089,8 +4196,10 @@ static PyObject *__pyx_f_10FileWriter___pyx_unpickle_FileWriter__set_state(struc
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
+static struct __pyx_vtabstruct_10FileWriter_FileWriter __pyx_vtable_10FileWriter_FileWriter;
 
 static PyObject *__pyx_tp_new_10FileWriter_FileWriter(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_10FileWriter_FileWriter *p;
   PyObject *o;
   if (likely((t->tp_flags & Py_TPFLAGS_IS_ABSTRACT) == 0)) {
     o = (*t->tp_alloc)(t, 0);
@@ -4098,6 +4207,8 @@ static PyObject *__pyx_tp_new_10FileWriter_FileWriter(PyTypeObject *t, CYTHON_UN
     o = (PyObject *) PyBaseObject_Type.tp_new(t, __pyx_empty_tuple, 0);
   }
   if (unlikely(!o)) return 0;
+  p = ((struct __pyx_obj_10FileWriter_FileWriter *)o);
+  p->__pyx_vtab = __pyx_vtabptr_10FileWriter_FileWriter;
   return o;
 }
 
@@ -4287,6 +4398,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_pyx_state, __pyx_k_pyx_state, sizeof(__pyx_k_pyx_state), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_type, __pyx_k_pyx_type, sizeof(__pyx_k_pyx_type), 0, 0, 1, 1},
   {&__pyx_n_s_pyx_unpickle_FileWriter, __pyx_k_pyx_unpickle_FileWriter, sizeof(__pyx_k_pyx_unpickle_FileWriter), 0, 0, 1, 1},
+  {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
   {&__pyx_n_s_queue, __pyx_k_queue, sizeof(__pyx_k_queue), 0, 0, 1, 1},
   {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
   {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
@@ -4307,7 +4419,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, 0, 0, 0, 0, 0, 0}
 };
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 41, __pyx_L1_error)
+  __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 46, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -4380,15 +4492,19 @@ static int __Pyx_modinit_type_init_code(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  if (PyType_Ready(&__pyx_type_10FileWriter_FileWriter) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  __pyx_vtabptr_10FileWriter_FileWriter = &__pyx_vtable_10FileWriter_FileWriter;
+  __pyx_vtable_10FileWriter_FileWriter.setFilePath = (PyObject *(*)(struct __pyx_obj_10FileWriter_FileWriter *, PyObject *, int __pyx_skip_dispatch))__pyx_f_10FileWriter_10FileWriter_setFilePath;
+  __pyx_vtable_10FileWriter_FileWriter.setWriter = (PyObject *(*)(struct __pyx_obj_10FileWriter_FileWriter *, int __pyx_skip_dispatch))__pyx_f_10FileWriter_10FileWriter_setWriter;
+  if (PyType_Ready(&__pyx_type_10FileWriter_FileWriter) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
   #if PY_VERSION_HEX < 0x030800B1
   __pyx_type_10FileWriter_FileWriter.tp_print = 0;
   #endif
   if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_type_10FileWriter_FileWriter.tp_dictoffset && __pyx_type_10FileWriter_FileWriter.tp_getattro == PyObject_GenericGetAttr)) {
     __pyx_type_10FileWriter_FileWriter.tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FileWriter, (PyObject *)&__pyx_type_10FileWriter_FileWriter) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
-  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10FileWriter_FileWriter) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_type_10FileWriter_FileWriter.tp_dict, __pyx_vtabptr_10FileWriter_FileWriter) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FileWriter, (PyObject *)&__pyx_type_10FileWriter_FileWriter) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject*)&__pyx_type_10FileWriter_FileWriter) < 0) __PYX_ERR(0, 13, __pyx_L1_error)
   __pyx_ptype_10FileWriter_FileWriter = &__pyx_type_10FileWriter_FileWriter;
   __Pyx_RefNannyFinishContext();
   return 0;
@@ -4619,80 +4735,83 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "FileWriter.pyx":1
+  /* "FileWriter.pyx":6
+ * 
+ * 
  * from datetime import datetime             # <<<<<<<<<<<<<<
  * import multiprocessing as mp
  * cimport cython
  */
-  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_datetime);
   __Pyx_GIVEREF(__pyx_n_s_datetime);
   PyList_SET_ITEM(__pyx_t_1, 0, __pyx_n_s_datetime);
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_datetime, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_datetime, __pyx_t_1, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_datetime); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_ImportFrom(__pyx_t_2, __pyx_n_s_datetime); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_datetime, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_datetime, __pyx_t_1) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "FileWriter.pyx":2
+  /* "FileWriter.pyx":7
+ * 
  * from datetime import datetime
  * import multiprocessing as mp             # <<<<<<<<<<<<<<
  * cimport cython
  * import os
  */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_multiprocessing, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 2, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_multiprocessing, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mp, __pyx_t_2) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mp, __pyx_t_2) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "FileWriter.pyx":4
+  /* "FileWriter.pyx":9
  * import multiprocessing as mp
  * cimport cython
  * import os             # <<<<<<<<<<<<<<
  * import queue
  * import time
  */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_os, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 4, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_os, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_os, __pyx_t_2) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_os, __pyx_t_2) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "FileWriter.pyx":5
+  /* "FileWriter.pyx":10
  * cimport cython
  * import os
  * import queue             # <<<<<<<<<<<<<<
  * import time
  * 
  */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_queue, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 5, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_queue, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_queue, __pyx_t_2) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_queue, __pyx_t_2) < 0) __PYX_ERR(0, 10, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "FileWriter.pyx":6
+  /* "FileWriter.pyx":11
  * import os
  * import queue
  * import time             # <<<<<<<<<<<<<<
  * 
  * cdef class FileWriter:
  */
-  __pyx_t_2 = __Pyx_Import(__pyx_n_s_time, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_Import(__pyx_n_s_time, 0, 0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_time, __pyx_t_2) < 0) __PYX_ERR(0, 6, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_time, __pyx_t_2) < 0) __PYX_ERR(0, 11, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "FileWriter.pyx":9
+  /* "FileWriter.pyx":14
  * 
  * cdef class FileWriter:
  * 	_UPDATE_TIMEOUT = 5;             # <<<<<<<<<<<<<<
  * 
  * 	def __str__(self):
  */
-  if (PyDict_SetItem((PyObject *)__pyx_ptype_10FileWriter_FileWriter->tp_dict, __pyx_n_s_UPDATE_TIMEOUT, __pyx_int_5) < 0) __PYX_ERR(0, 9, __pyx_L1_error)
+  if (PyDict_SetItem((PyObject *)__pyx_ptype_10FileWriter_FileWriter->tp_dict, __pyx_n_s_UPDATE_TIMEOUT, __pyx_int_5) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
   PyType_Modified(__pyx_ptype_10FileWriter_FileWriter);
 
   /* "(tree fragment)":1
@@ -4706,9 +4825,9 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "FileWriter.pyx":1
- * from datetime import datetime             # <<<<<<<<<<<<<<
- * import multiprocessing as mp
- * cimport cython
+ * # distutils: extra_compile_args=-fopenmp             # <<<<<<<<<<<<<<
+ * # distutils: extra_link_args=-fopenmp
+ * # distutils: define_macros=NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION
  */
   __pyx_t_2 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -6159,6 +6278,24 @@ static PyObject* __Pyx_PyObject_GenericGetAttr(PyObject* obj, PyObject* attr_nam
     return __Pyx_PyObject_GenericGetAttrNoDict(obj, attr_name);
 }
 #endif
+
+/* SetVTable */
+static int __Pyx_SetVtable(PyObject *dict, void *vtable) {
+#if PY_VERSION_HEX >= 0x02070000
+    PyObject *ob = PyCapsule_New(vtable, 0, 0);
+#else
+    PyObject *ob = PyCObject_FromVoidPtr(vtable, 0);
+#endif
+    if (!ob)
+        goto bad;
+    if (PyDict_SetItem(dict, __pyx_n_s_pyx_vtable, ob) < 0)
+        goto bad;
+    Py_DECREF(ob);
+    return 0;
+bad:
+    Py_XDECREF(ob);
+    return -1;
+}
 
 /* SetupReduce */
 static int __Pyx_setup_reduce_is_named(PyObject* meth, PyObject* name) {

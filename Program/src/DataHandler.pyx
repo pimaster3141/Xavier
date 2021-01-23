@@ -1,3 +1,7 @@
+# distutils: extra_compile_args=-fopenmp
+# distutils: extra_link_args=-fopenmp
+# distutils: define_macros=NPY_NO_DEPRECATED_API=NPY_1_7_API_VERSION
+
 import multiprocessing as mp
 from multiprocessing import shared_memory
 import USBReader
@@ -46,6 +50,7 @@ class DataHandler(mp.Process):
 		cdef unsigned char [::1] rdy = self.shmReady.buf();
 		cdef int startIndex = 0;
 		cdef int endInddex = 0;
+		cdef double pollStep = DataHandler._POLL_STEP;
 
 		while(not self.isDead.is_set()):
 			if(rdy[counter] & 0x80):
@@ -54,7 +59,7 @@ class DataHandler(mp.Process):
 			self.fileWriter.writerUpdateTasks();
 
 			if(rdy[counter] & 0x01 == 0):
-				time.sleep(DataHandler._POLL_STEP);
+				time.sleep(pollStep);
 				continue;
 
 			startIndex = counter*bufferWidth;

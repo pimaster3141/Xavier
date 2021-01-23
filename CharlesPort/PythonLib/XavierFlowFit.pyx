@@ -12,14 +12,15 @@ BETA_BOUNDS = [0.01, 0.7];
 
 def G1Analytical(aDb, tauList, rho=2, no=1.33, wavelength=8.48E-5, mua=0.1, musp=10):
 	k0=2*np.pi*no/(wavelength);
-	k=np.sqrt(3*mua*musp+6*musp*musp*k0*k0*aDb*tauList);
 	n=no/1;
 	Reff=-1.44/(n*n)+0.710/n+0.668+0.00636*n;
 	zb=(2*(1+Reff))/(3*musp*(1-Reff));
 	r1=np.sqrt(1/(musp*musp)+rho*rho);
 	rb=np.sqrt((2*zb+1)**2/(musp*musp)+rho*rho);
-	G1=np.exp(-k*r1)/r1-np.exp(-k*rb)/rb;
 	G1_0=np.exp(-np.sqrt(3*mua*musp)*r1)/r1-np.exp(-np.sqrt(3*mua*musp)*rb)/rb;
+	
+	k=np.sqrt(3*mua*musp+6*musp*musp*k0*k0*aDb*tauList);
+	G1=np.exp(-k*r1)/r1-np.exp(-k*rb)/rb;
 	g1=G1/G1_0;
 	return g1;
 
